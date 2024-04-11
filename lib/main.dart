@@ -1,6 +1,9 @@
-import 'package:ecommerce/pages/onboarding.dart';
+// main files
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// project files
+import 'package:ecommerce/pages/home.dart';
+import 'package:ecommerce/pages/onboarding.dart';
 
 void main() {
   runApp(
@@ -25,7 +28,7 @@ class App extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: theme,
           home: Scaffold(
-            body: OnBoardingScreen(),
+            body: Home(),
           ),
         );
       },
