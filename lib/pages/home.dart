@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/widgets/support_styling_widget.dart';
-import 'package:flutter/widgets.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -53,7 +52,7 @@ class _HomeState extends State<Home> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      "assets/images/user.png",
+                      "assets/images/user2.png",
                       height: 60,
                       width: 60,
                     ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // project files
 import 'package:ecommerce/pages/home.dart';
-import 'package:ecommerce/pages/onboarding.dart';
+// import 'package:ecommerce/pages/onboarding.dart';
 
 void main() {
   runApp(
