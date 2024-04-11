@@ -2,7 +2,7 @@
 
 A new E-commerce Flutter project.
 
-## Getting Started
+## Status
 
 Under Development 
 
