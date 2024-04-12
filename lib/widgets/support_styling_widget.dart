@@ -10,7 +10,15 @@ class SupportStylingClass {
 
   // default Horizontal Margin
   get defaultHorizontalMargin {
-    return EdgeInsets.symmetric(horizontal: 8.0);
+    return EdgeInsets.symmetric(horizontal: 9.0);
+  }
+
+  // custom spacing(height, width)
+  Widget customSpacing({height, width}) {
+    return SizedBox(
+      height: height,
+      width: width,
+    );
   }
 
   // default title
