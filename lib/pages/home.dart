@@ -2,6 +2,12 @@
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/widgets/support_styling_widget.dart';
+import 'package:ecommerce/data/dummy_data.dart';
+import 'package:ecommerce/widgets/category/category_display.dart';
+import 'package:ecommerce/widgets/search_bar.dart';
+
+// created style object of SupportStylingClass
+SupportStylingClass style = SupportStylingClass();
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,8 +17,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // created style object of SupportStylingClass
-  SupportStylingClass style = SupportStylingClass();
   // get current time
   final hour = DateTime.now().hour;
 
@@ -35,67 +39,79 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: Container(
           margin: style.defaultHorizontalMargin,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "hello, User",
-                        style: style.mainTitle,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // header section, where it will show user name, greeting message and icon
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "hello, User",
+                          style: style.mainTitle,
+                        ),
+                        currentTime(),
+                      ],
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        "assets/images/user2.png",
+                        height: 60,
+                        width: 60,
                       ),
-                      currentTime(),
-                    ],
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      "assets/images/user2.png",
-                      height: 60,
-                      width: 60,
                     ),
-                  ),
-                ],
-              ),
-              style.customSpacing(height: 20.0),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: style.color2,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
+                  ],
                 ),
-                width: MediaQuery.of(context).size.width,
-                child: TextField(
-                  cursorColor: style.color1,
-                  style: TextStyle(
-                    color: style.color2,
-                    decoration: TextDecoration.none,
-                    decorationThickness: 0,
-                  ),
-                  autocorrect: true,
-                  decoration: InputDecoration(
-                    hintText: "Search here..",
-                    hintStyle: style.greetingTitle
-                        .copyWith(fontSize: 20, color: style.color1),
-                    suffixIcon: Icon(
-                      Icons.search,
-                      size: 32.5,
-                      color: style.color2,
+                style.customSpacing(height: 20.0),
+                // for search bar
+                CustomSearchBar(),
+                style.customSpacing(height: 19.5),
+                // Category title
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Category's",
+                      style: style.mainTitle.copyWith(
+                        fontSize: 20,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    // disabledBorder: InputBorder.none,
-                    border: InputBorder.none,
-                  ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      customBorder: Border.all(
+                        color: style.color2,
+                        width: 0.8,
+                      ),
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        margin: EdgeInsets.symmetric(horizontal: 4),
+                        child: Text(
+                          "See all",
+                          style: style.greetingTitle.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              )
-            ],
+                style.customSpacing(height: 10.0),
+                // Category cards
+                CategoryDisplay(
+                  category: dummyCategories,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // project files
 import 'package:ecommerce/pages/home.dart';
-// import 'package:ecommerce/pages/onboarding.dart';
 
 void main() {
   runApp(
@@ -23,12 +22,14 @@ class App extends StatelessWidget {
     return OrientationBuilder(
       builder: (context, orientation) {
         print("Orientation $orientation");
-
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: theme,
           home: Scaffold(
-            body: Home(),
+            resizeToAvoidBottomInset: false,
+            body: Center(
+              child: Home(),
+            ),
           ),
         );
       },
