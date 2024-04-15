@@ -1,4 +1,6 @@
 // main files
+import 'package:ecommerce/widgets/products/product_display.dart';
+import 'package:ecommerce/widgets/title_tile.dart';
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/widgets/support_styling_widget.dart';
@@ -68,48 +70,26 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 style.customSpacing(height: 20.0),
-                // for search bar
+                // search bar
                 CustomSearchBar(),
                 style.customSpacing(height: 19.5),
                 // Category title
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Category's",
-                      style: style.mainTitle.copyWith(
-                        fontSize: 20,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      customBorder: Border.all(
-                        color: style.color2,
-                        width: 0.8,
-                      ),
-                      onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.all(4),
-                        margin: EdgeInsets.symmetric(horizontal: 4),
-                        child: Text(
-                          "See all",
-                          style: style.greetingTitle.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                TitleTile(mainTitle: "Category's", seeAll: () {}),
                 style.customSpacing(height: 10.0),
                 // Category cards
                 CategoryDisplay(
                   category: dummyCategories,
                 ),
+                style.customSpacing(height: 19.0),
+                // Product Title
+                TitleTile(mainTitle: "Product's", seeAll: () {}), 
+                style.customSpacing(height: 10.0),
+                // Products cards
+                ProductDisplay(
+                  product: dummyProducts,
+                ),
+
+                style.customSpacing(height: 100.0),
               ],
             ),
           ),
