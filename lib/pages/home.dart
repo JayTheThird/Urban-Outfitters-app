@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
                 ),
                 style.customSpacing(height: 19.0),
                 // Product Title
-                TitleTile(mainTitle: "Product's", seeAll: () {}), 
+                TitleTile(mainTitle: "Product's", seeAll: () {}),
                 style.customSpacing(height: 10.0),
                 // Products cards
                 ProductDisplay(

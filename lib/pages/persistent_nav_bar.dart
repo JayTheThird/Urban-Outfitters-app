@@ -71,7 +71,7 @@ class Tabs extends StatelessWidget {
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
+        // colorBehindNavBar: Colors.white,
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,

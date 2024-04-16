@@ -27,7 +27,7 @@ class _ProductTileState extends State<ProductTile> {
       decoration: BoxDecoration(
         border: Border.all(
           color: style.color1,
-          width: 0.5,
+          width: 0.8,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -66,7 +66,7 @@ class _ProductTileState extends State<ProductTile> {
               color: style.color1.withOpacity(0.8),
             ),
           ),
-          style.customSpacing(height: 15.0),
+          style.customSpacing(height: 20.0),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
