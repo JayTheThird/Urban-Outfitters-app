@@ -1,9 +1,8 @@
 // main files
-import 'package:ecommerce/pages/presistent_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // project files
-import 'package:ecommerce/pages/home.dart';
+import 'package:ecommerce/pages/persistent_nav_bar.dart';
 
 void main() {
   runApp(
