@@ -37,6 +37,7 @@ dependencies:
   hexcolor: ^3.0.1
   google_fonts: ^6.2.1
   transparent_image: ^2.0.1
+  persistent_bottom_nav_bar: ^5.0.2
 
 dev_dependencies:
   flutter_test:
