@@ -1,10 +1,16 @@
 // main files
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 // project files
 import 'package:ecommerce/pages/persistent_nav_bar.dart';
 
-void main() {
+void main() async {
+  // for native splash
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Future.delayed(Duration(seconds: 2));
+  FlutterNativeSplash.remove();
   runApp(
     const App(),
   );
