@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/models/products.dart';
-import 'package:ecommerce/pages/home.dart';
+import 'package:ecommerce/main.dart';
 
 class ProductTile extends StatefulWidget {
   const ProductTile({

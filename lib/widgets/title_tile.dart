@@ -1,5 +1,7 @@
-import 'package:ecommerce/pages/home.dart';
+// main files
 import 'package:flutter/material.dart';
+// Project files
+import 'package:ecommerce/main.dart';
 
 class TitleTile extends StatefulWidget {
   const TitleTile({

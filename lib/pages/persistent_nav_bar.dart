@@ -1,8 +1,11 @@
+// Main files
+import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+// Project files
+import 'package:ecommerce/main.dart';
 import 'package:ecommerce/pages/home.dart';
 import 'package:ecommerce/pages/order.dart';
 import 'package:ecommerce/pages/user_profile.dart';
-import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Tabs extends StatelessWidget {
   const Tabs({super.key});

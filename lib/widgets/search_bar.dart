@@ -1,5 +1,8 @@
-import 'package:ecommerce/pages/home.dart';
+// Main files
 import 'package:flutter/material.dart';
+// Project Files
+import 'package:ecommerce/main.dart';
+
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({super.key});
