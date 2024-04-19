@@ -1,4 +1,5 @@
 // main files
+import 'package:ecommerce/widgets/Slider/image_slider.dart';
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/main.dart';
@@ -17,6 +18,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // void onTapBanner() {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (context) => UserProfile(),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +35,11 @@ class _HomeState extends State<Home> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // main header file 
+                // main header file
                 UrbanOutfittersMainHeader(),
+                style.customSpacing(height: 20.0),
+                // slider
+                HomeImageSlider(),
                 style.customSpacing(height: 20.0),
                 // search bar
                 CustomSearchBar(),
