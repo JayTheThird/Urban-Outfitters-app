@@ -18,14 +18,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // void onTapBanner() {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (context) => UserProfile(),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +37,10 @@ class _HomeState extends State<Home> {
                 CustomSearchBar(),
                 style.customSpacing(height: 19.5),
                 // Category title
-                TitleTile(mainTitle: "Category's", seeAll: () {}),
+                TitleTile(
+                  mainTitle: "Category's",
+                  seeAll: () {},
+                ),
                 style.customSpacing(height: 10.0),
                 // Category cards
                 CategoryDisplay(

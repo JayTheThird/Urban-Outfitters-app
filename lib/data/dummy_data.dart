@@ -8,6 +8,13 @@ final dummyCategories = [
   Categories(id: "c3", Category_Image: "assets/products/f3.jpg"),
   Categories(id: "c4", Category_Image: "assets/products/f4.jpg"),
   Categories(id: "c5", Category_Image: "assets/products/f5.jpg"),
+  Categories(id: "c6", Category_Image: "assets/products/f5.jpg"),
+  Categories(id: "c7", Category_Image: "assets/products/f5.jpg"),
+  Categories(id: "c8", Category_Image: "assets/products/f5.jpg"),
+  Categories(id: "c9", Category_Image: "assets/products/f5.jpg"),
+  Categories(id: "c10", Category_Image: "assets/products/f5.jpg"),
+  Categories(id: "c11", Category_Image: "assets/products/f5.jpg"),
+  Categories(id: "c12", Category_Image: "assets/products/f5.jpg"),
 ];
 
 final dummyProducts = [
@@ -47,4 +54,24 @@ final dummyProducts = [
     productImage: "assets/products/f3.jpg",
     productPrice: 1100,
   ),
+];
+
+// created list of banner
+List banner = [
+  {
+    "id": 1,
+    "image_path": 'assets/banner/Urban Outfitters Banner 1.png',
+  },
+  {
+    "id": 2,
+    "image_path": 'assets/banner/Urban Outfitters Banner 2.png',
+  },
+  {
+    "id": 3,
+    "image_path": 'assets/banner/Urban Outfitters Banner 3.png',
+  },
+  {
+    "id": 4,
+    "image_path": 'assets/banner/Urban Outfitters Banner 4.png',
+  },
 ];

@@ -1,4 +1,5 @@
 // main files
+import 'package:ecommerce/data/dummy_data.dart';
 import 'package:ecommerce/main.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -15,21 +16,7 @@ class HomeImageSlider extends StatefulWidget {
 class _HomeImageSliderState extends State<HomeImageSlider> {
   // Carousel Controller
   final CarouselController carouselController = CarouselController();
-  // created list of banner
-  List banner = [
-    {
-      "id": 1,
-      "image_path": 'assets/banner/Urban Outfitters Banner 1.png',
-    },
-    {
-      "id": 2,
-      "image_path": 'assets/banner/Urban Outfitters Banner 2.png',
-    },
-    {
-      "id": 3,
-      "image_path": 'assets/banner/Urban Outfitters Banner 3.png',
-    },
-  ];
+
 
   // current index
   int currentIndex = 0;

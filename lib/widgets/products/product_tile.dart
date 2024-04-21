@@ -5,12 +5,11 @@ import 'package:ecommerce/models/products.dart';
 import 'package:ecommerce/main.dart';
 
 class ProductTile extends StatefulWidget {
-  const ProductTile({
-    super.key,
-    required this.products,
-  });
+  const ProductTile(
+      {super.key, required this.products, required this.onSelectProducts});
 
   final Products products;
+  final void Function(Products products) onSelectProducts;
 
   @override
   State<ProductTile> createState() => _ProductTileState();
@@ -88,7 +87,10 @@ class _ProductTileState extends State<ProductTile> {
                   //   ),
                   // ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // navigate to product_details.dart file to view full product
+                  widget.onSelectProducts(widget.products);
+                },
                 child: Text(
                   "VIEW",
                   style: style.mainTitle.copyWith(
