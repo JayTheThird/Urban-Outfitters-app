@@ -30,7 +30,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 360,
+      height: 400,
       // width: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

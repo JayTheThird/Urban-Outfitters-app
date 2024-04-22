@@ -20,7 +20,7 @@ class _ProductTileState extends State<ProductTile> {
   Widget build(BuildContext context) {
     return Container(
       width: 210,
-      height: 300,
+      height: 350,
       margin: EdgeInsets.only(left: 5, right: 5),
       padding: EdgeInsets.all(6),
       decoration: BoxDecoration(
@@ -40,7 +40,9 @@ class _ProductTileState extends State<ProductTile> {
             ),
             clipBehavior: Clip.hardEdge,
             child: Image.asset(
-              widget.products.productImage,
+              // only display main product image
+              widget.products.productMainImage,
+              fit: BoxFit.cover,
               height: 200,
               width: 200,
             ),
@@ -54,7 +56,7 @@ class _ProductTileState extends State<ProductTile> {
               color: style.color1.withOpacity(0.8),
             ),
             softWrap: true,
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           style.customSpacing(height: 6.0),
@@ -65,7 +67,7 @@ class _ProductTileState extends State<ProductTile> {
               color: style.color1.withOpacity(0.8),
             ),
           ),
-          style.customSpacing(height: 20.0),
+          style.customSpacing(height: 30.0),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,

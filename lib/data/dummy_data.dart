@@ -20,40 +20,54 @@ final dummyCategories = [
 final dummyProducts = [
   Products(
     id: "p1",
-    productName: "Product 1",
-    productImage: "assets/products/n1.jpg",
+    productName: "Double Pocket Lycra shirt Premium",
+    productMainImage: "assets/products/double-pocket/dp_lycra_blue.jpg",
+    productImage: [
+      {"image_Path": "assets/products/double-pocket/dp_lycra_blue.jpg"},
+      {"image_Path": "assets/products/double-pocket/dp_lycra_all_colors.jpg"},
+    ],
     productPrice: 700,
   ),
   Products(
     id: "p2",
-    productName: "Product 2",
-    productImage: "assets/products/f1.jpg",
-    productPrice: 500,
+    productName: "Chex Double Pocket Shirt",
+    productMainImage: "assets/products/double-pocket/dp_chex_front.jpg",
+    productImage: [
+      {"image_Path": "assets/products/double-pocket/dp_chex_front.jpg"},
+      {"image_Path": "assets/products/double-pocket/dp_chex_back.jpg"},
+    ],
+    productPrice: 999,
   ),
-  Products(
-    id: "p3",
-    productName: "Product 3",
-    productImage: "assets/products/n2.jpg",
-    productPrice: 1000,
-  ),
-  Products(
-    id: "p4",
-    productName: "Product 4",
-    productImage: "assets/products/f2.jpg",
-    productPrice: 1290,
-  ),
-  Products(
-    id: "p5",
-    productName: "Product 5",
-    productImage: "assets/products/n3.jpg",
-    productPrice: 1500,
-  ),
-  Products(
-    id: "p5",
-    productName: "Product 6",
-    productImage: "assets/products/f3.jpg",
-    productPrice: 1100,
-  ),
+  // Products(
+  //   id: "p2",
+  //   productName: "Product 2",
+  //   productImage: "assets/products/f1.jpg",
+  //   productPrice: 500,
+  // ),
+  // Products(
+  //   id: "p3",
+  //   productName: "Product 3",
+  //   productImage: "assets/products/n2.jpg",
+  //   productPrice: 1000,
+  // ),
+  // Products(
+  //   id: "p4",
+  //   productName: "Product 4",
+  //   productImage: "assets/products/f2.jpg",
+  //   productPrice: 1290,
+  // ),
+  // Products(
+  //   id: "p5",
+  //   productName: "Product 5",
+  //   productImage: "assets/products/n3.jpg",
+  //   productPrice: 1500,
+  // ),
+  // Products(
+  //   id: "p5",
+  //   productName: "Product 6",
+  //   productImage: "assets/products/f3.jpg",
+  //   productPrice: 1100,
+  // ),
 ];
 
 // created list of banner
