@@ -31,7 +31,7 @@ class SupportStylingClass {
     );
   }
 
-  TextStyle get greetingTitle {
+  TextStyle get subTitle {
     return TextStyle(
       color: color2.withOpacity(0.6),
       fontSize: 17,

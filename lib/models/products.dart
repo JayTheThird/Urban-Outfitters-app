@@ -6,6 +6,8 @@ class Products {
     required this.productImage,
     required this.productPrice,
     required this.productSize,
+    required this.productFabric,
+    required this.productDetails,
   });
 
   final String id;
@@ -14,4 +16,6 @@ class Products {
   final List productImage;
   final double productPrice;
   final List productSize;
+  final String productFabric;
+  final String productDetails;
 }

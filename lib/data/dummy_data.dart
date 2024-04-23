@@ -29,6 +29,9 @@ final dummyProducts = [
     ],
     productSize: ["S", "M", "L"],
     productPrice: 700,
+    productFabric: "Lycra",
+    productDetails:
+        "A Double pocket Casual Shirt made with Lycra material and top left side have beautiful Design, Best To wear in Winters",
   ),
   Products(
     id: "p2",
@@ -40,6 +43,9 @@ final dummyProducts = [
     ],
     productSize: ["M", "L"],
     productPrice: 999,
+    productFabric: "Cotton",
+    productDetails:
+        "A Double pocket Casual Shirt made with Cotton material, Best To wear in All Seasons.",
   ),
   // Products(
   //   id: "p2",

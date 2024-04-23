@@ -31,7 +31,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
                     (item) => Image.asset(
                       item["image_Path"],
                       width: double.infinity,
-                      // height: 400,
+                      height: 400,
                       fit: BoxFit.cover,
                     ),
                   )

@@ -19,13 +19,13 @@ class UrbanOutfittersMainHeaderState extends State<UrbanOutfittersMainHeader> {
   // display current time
   Widget currentTime() {
     if (hour < 12) {
-      return Text("Good Morning", style: style.greetingTitle);
+      return Text("Good Morning", style: style.subTitle);
     } else if (hour < 16) {
-      return Text("Good Afternoon", style: style.greetingTitle);
+      return Text("Good Afternoon", style: style.subTitle);
     } else if (hour < 19) {
-      return Text("Good Evening", style: style.greetingTitle);
+      return Text("Good Evening", style: style.subTitle);
     } else {
-      return Text("Good Night", style: style.greetingTitle);
+      return Text("Good Night", style: style.subTitle);
     }
   }
 

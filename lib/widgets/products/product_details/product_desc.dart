@@ -63,7 +63,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   child: Text(
                     size,
                     textAlign: TextAlign.center,
-                    style: style.greetingTitle.copyWith(
+                    style: style.subTitle.copyWith(
                       fontSize: 20,
                       color: style.color2.withOpacity(0.8),
                       fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
         // product price
         Text(
           '${widget.products.productPrice} Rs',
-          style: style.greetingTitle.copyWith(
+          style: style.subTitle.copyWith(
             fontSize: 20,
             color: style.color1.withOpacity(0.8),
           ),

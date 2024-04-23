@@ -81,7 +81,7 @@ class _ProductTileState extends State<ProductTile> {
                   child: Text(
                     size,
                     textAlign: TextAlign.center,
-                    style: style.greetingTitle.copyWith(
+                    style: style.subTitle.copyWith(
                       fontSize: 14,
                       color: style.color1,
                       fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class _ProductTileState extends State<ProductTile> {
           // product price
           Text(
             '${widget.products.productPrice} Rs',
-            style: style.greetingTitle.copyWith(
+            style: style.subTitle.copyWith(
               fontSize: 18,
               color: style.color1.withOpacity(0.8),
             ),

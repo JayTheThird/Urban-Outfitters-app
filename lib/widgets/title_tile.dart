@@ -44,7 +44,7 @@ class _TitleTileState extends State<TitleTile> {
             margin: EdgeInsets.symmetric(horizontal: 4),
             child: Text(
               "See all",
-              style: style.greetingTitle.copyWith(
+              style: style.subTitle.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),

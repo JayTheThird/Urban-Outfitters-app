@@ -30,7 +30,7 @@ class CustomSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           hintText: "Search here..",
           hintStyle:
-              style.greetingTitle.copyWith(fontSize: 20, color: style.color1),
+              style.subTitle.copyWith(fontSize: 20, color: style.color1),
           suffixIcon: Icon(
             Icons.search,
             size: 32.5,
