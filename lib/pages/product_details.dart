@@ -1,6 +1,8 @@
 // main file
-import 'package:carousel_slider/carousel_slider.dart';
+
+import 'package:ecommerce/widgets/products/product_details/product_desc.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce/widgets/products/product_details/product_details_image_slider.dart';
 // project files
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/models/products.dart';
@@ -15,12 +17,6 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-// Carousel Controller
-  CarouselController carouselController = CarouselController();
-
-  // current index
-  int currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,67 +24,24 @@ class _ProductDetailsState extends State<ProductDetails> {
         title: Text(widget.products.productName),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          style.customSpacing(height: 20.0),
+          style.customSpacing(height: 10.0),
           // For Product Image Slider
-          Stack(
-            children: [
-              CarouselSlider(
-                items: widget.products.productImage
-                    .map(
-                      (item) => Image.asset(
-                        item["image_Path"],
-                        width: double.infinity,
-                        height: 400,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                    .toList(),
-                carouselController: carouselController,
-                options: CarouselOptions(
-                  scrollPhysics: const BouncingScrollPhysics(),
-                  autoPlay: true,
-                  aspectRatio: 1, // to increase and decrease height
-                  viewportFraction: 1,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: widget.products.productImage.asMap().entries.map(
-                    (entry) {
-                      return GestureDetector(
-                        onTap: () =>
-                            carouselController.animateToPage(entry.key),
-                        child: Container(
-                          width: currentIndex == entry.key ? 17 : 7,
-                          height: 7.0,
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 3.0,
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: currentIndex == entry.key
-                                  ? style.color1
-                                  : style.color4),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ),
-              ),
-            ],
+          ProductImageSlider(products: widget.products),
+          style.customSpacing(height: 10.0),
+          // product description
+          Container(
+            margin: style.defaultHorizontalMargin,
+            child: ProductDescription(products: widget.products),
           ),
         ],
       ),
     );
   }
 }
+
+
+
+    

@@ -17,6 +17,7 @@ final dummyCategories = [
   Categories(id: "c12", Category_Image: "assets/products/f5.jpg"),
 ];
 
+// dummy data for products
 final dummyProducts = [
   Products(
     id: "p1",
@@ -26,6 +27,7 @@ final dummyProducts = [
       {"image_Path": "assets/products/double-pocket/dp_lycra_blue.jpg"},
       {"image_Path": "assets/products/double-pocket/dp_lycra_all_colors.jpg"},
     ],
+    productSize: ["S", "M", "L"],
     productPrice: 700,
   ),
   Products(
@@ -36,6 +38,7 @@ final dummyProducts = [
       {"image_Path": "assets/products/double-pocket/dp_chex_front.jpg"},
       {"image_Path": "assets/products/double-pocket/dp_chex_back.jpg"},
     ],
+    productSize: ["M", "L"],
     productPrice: 999,
   ),
   // Products(

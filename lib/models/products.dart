@@ -5,6 +5,7 @@ class Products {
     required this.productMainImage,
     required this.productImage,
     required this.productPrice,
+    required this.productSize,
   });
 
   final String id;
@@ -12,4 +13,5 @@ class Products {
   final String productMainImage;
   final List productImage;
   final double productPrice;
+  final List productSize;
 }
