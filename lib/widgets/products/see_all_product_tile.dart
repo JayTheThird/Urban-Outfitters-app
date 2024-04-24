@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce/models/products.dart';
 import 'package:ecommerce/main.dart';
 
-class ProductTile extends StatefulWidget {
-  const ProductTile({
+class SeeAllProductTile extends StatefulWidget {
+  const SeeAllProductTile({
     super.key,
     required this.products,
     required this.onSelectProducts,
@@ -15,10 +15,10 @@ class ProductTile extends StatefulWidget {
   final void Function(Products products) onSelectProducts;
 
   @override
-  State<ProductTile> createState() => _ProductTileState();
+  State<SeeAllProductTile> createState() => _ProductTileState();
 }
 
-class _ProductTileState extends State<ProductTile> {
+class _ProductTileState extends State<SeeAllProductTile> {
   @override
   Widget build(BuildContext context) {
     return Container(

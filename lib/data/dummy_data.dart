@@ -47,6 +47,7 @@ final dummyProducts = [
     productDetails:
         "A Double pocket Casual Shirt made with Cotton material, Best To wear in All Seasons.",
   ),
+
   // Products(
   //   id: "p2",
   //   productName: "Product 2",

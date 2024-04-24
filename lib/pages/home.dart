@@ -1,4 +1,5 @@
 // main files
+import 'package:ecommerce/pages/all_products.dart';
 import 'package:ecommerce/widgets/Slider/image_slider.dart';
 import 'package:flutter/material.dart';
 // project files
@@ -18,6 +19,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void seeAllProducts() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => SeeAllProducts(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +57,7 @@ class _HomeState extends State<Home> {
                 ),
                 style.customSpacing(height: 19.0),
                 // Product Title
-                TitleTile(mainTitle: "Product's", seeAll: () {}),
+                TitleTile(mainTitle: "Product's", seeAll: seeAllProducts),
                 style.customSpacing(height: 10.0),
                 // Products cards
                 ProductDisplay(
