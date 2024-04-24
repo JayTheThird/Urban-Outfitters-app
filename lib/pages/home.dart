@@ -1,5 +1,4 @@
 // main files
-import 'package:ecommerce/pages/all_products.dart';
 import 'package:ecommerce/widgets/Slider/image_slider.dart';
 import 'package:flutter/material.dart';
 // project files
@@ -10,6 +9,8 @@ import 'package:ecommerce/widgets/search_bar.dart';
 import 'package:ecommerce/widgets/main_header.dart';
 import 'package:ecommerce/widgets/products/product_display.dart';
 import 'package:ecommerce/widgets/title_tile.dart';
+import 'package:ecommerce/widgets/category/all_category.dart';
+import 'package:ecommerce/pages/all_products.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -19,10 +20,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // Navigate to see all product when user taps on see all
   void seeAllProducts() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => SeeAllProducts(),
+      ),
+    );
+  }
+
+  // Navigate to see all Category when user taps on see all
+  void seeAllCategory() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => SeeAllCategories(),
       ),
     );
   }
@@ -48,7 +59,7 @@ class _HomeState extends State<Home> {
                 // Category title
                 TitleTile(
                   mainTitle: "Category's",
-                  seeAll: () {},
+                  seeAll: seeAllCategory,
                 ),
                 style.customSpacing(height: 10.0),
                 // Category cards

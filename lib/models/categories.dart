@@ -3,9 +3,13 @@
 class Categories {
   Categories({
     required this.id,
-    required this.Category_Image,
+    required this.image,
+    required this.categoryType,
+    required this.categoryName,
   });
 
   final String id;
-  final String Category_Image;
+  final String image;
+  final String categoryType;
+  final String categoryName;
 }

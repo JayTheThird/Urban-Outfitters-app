@@ -6,13 +6,16 @@ import 'package:ecommerce/main.dart';
 import 'package:ecommerce/pages/home.dart';
 import 'package:ecommerce/pages/order.dart';
 import 'package:ecommerce/pages/user_profile.dart';
+import 'package:ecommerce/pages/all_products.dart';
 
 class Tabs extends StatelessWidget {
   const Tabs({super.key});
 
+  // List of screen
   List<Widget> _buildScreens() {
     return [
       Home(),
+      SeeAllProducts(),
       UserOrders(),
       UserProfile(),
     ];
@@ -31,7 +34,20 @@ class Tabs extends StatelessWidget {
         ),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.shopping_bag_outlined),
+        icon: Icon(Icons.storefront),
+        title: ("Store"),
+        activeColorPrimary: style.color1,
+        inactiveColorPrimary: style.color2,
+        textStyle: style.mainTitle.copyWith(
+          fontSize: 20,
+          letterSpacing: 1.5,
+        ),
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(
+          Icons.shopping_bag_outlined,
+          color: style.color1,
+        ),
         title: ("Orders"),
         activeColorPrimary: style.color1,
         inactiveColorPrimary: style.color2,

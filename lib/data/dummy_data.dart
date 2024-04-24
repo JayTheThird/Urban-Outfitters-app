@@ -3,24 +3,37 @@ import 'package:ecommerce/models/products.dart';
 
 // dummy data for category
 final dummyCategories = [
-  Categories(id: "c1", Category_Image: "assets/products/f1.jpg"),
-  Categories(id: "c2", Category_Image: "assets/products/f2.jpg"),
-  Categories(id: "c3", Category_Image: "assets/products/f3.jpg"),
-  Categories(id: "c4", Category_Image: "assets/products/f4.jpg"),
-  Categories(id: "c5", Category_Image: "assets/products/f5.jpg"),
-  Categories(id: "c6", Category_Image: "assets/products/f5.jpg"),
-  Categories(id: "c7", Category_Image: "assets/products/f5.jpg"),
-  Categories(id: "c8", Category_Image: "assets/products/f5.jpg"),
-  Categories(id: "c9", Category_Image: "assets/products/f5.jpg"),
-  Categories(id: "c10", Category_Image: "assets/products/f5.jpg"),
-  Categories(id: "c11", Category_Image: "assets/products/f5.jpg"),
-  Categories(id: "c12", Category_Image: "assets/products/f5.jpg"),
+  Categories(
+    id: "c1",
+    image: "assets/products/n1.jpg",
+    categoryType: "upper-wear",
+    categoryName: "Shirts",
+  ),
+  Categories(
+    id: "c2",
+    image: "assets/products/f1.jpg",
+    categoryType: "upper-wear",
+    categoryName: "half Shirts",
+  ),
+  Categories(
+    id: "c3",
+    image: "assets/products/double-pocket/denim_jeans.jpg",
+    categoryType: "bottom-wear",
+    categoryName: "denim jeans",
+  ),
+  Categories(
+    id: "c4",
+    image: "assets/products/double-pocket/cotton_jeans.jpg",
+    categoryType: "bottom-wear",
+    categoryName: "cotton jeans",
+  ),
 ];
 
 // dummy data for products
 final dummyProducts = [
   Products(
     id: "p1",
+    categories: ["c1"],
     productName: "Double Pocket Lycra shirt Premium",
     productMainImage: "assets/products/double-pocket/dp_lycra_blue.jpg",
     productImage: [
@@ -35,6 +48,7 @@ final dummyProducts = [
   ),
   Products(
     id: "p2",
+    categories: ["c1"],
     productName: "Chex Double Pocket Shirt",
     productMainImage: "assets/products/double-pocket/dp_chex_front.jpg",
     productImage: [
@@ -47,37 +61,6 @@ final dummyProducts = [
     productDetails:
         "A Double pocket Casual Shirt made with Cotton material, Best To wear in All Seasons.",
   ),
-
-  // Products(
-  //   id: "p2",
-  //   productName: "Product 2",
-  //   productImage: "assets/products/f1.jpg",
-  //   productPrice: 500,
-  // ),
-  // Products(
-  //   id: "p3",
-  //   productName: "Product 3",
-  //   productImage: "assets/products/n2.jpg",
-  //   productPrice: 1000,
-  // ),
-  // Products(
-  //   id: "p4",
-  //   productName: "Product 4",
-  //   productImage: "assets/products/f2.jpg",
-  //   productPrice: 1290,
-  // ),
-  // Products(
-  //   id: "p5",
-  //   productName: "Product 5",
-  //   productImage: "assets/products/n3.jpg",
-  //   productPrice: 1500,
-  // ),
-  // Products(
-  //   id: "p5",
-  //   productName: "Product 6",
-  //   productImage: "assets/products/f3.jpg",
-  //   productPrice: 1100,
-  // ),
 ];
 
 // created list of banner

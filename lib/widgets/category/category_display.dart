@@ -13,7 +13,7 @@ class CategoryDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     // for display category using list-view builder
     return SizedBox(
-      height: 260,
+      height: 150,
       child: ListView.builder(
         itemCount: category.length,
         scrollDirection: Axis.horizontal,

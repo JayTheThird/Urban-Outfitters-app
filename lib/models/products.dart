@@ -1,6 +1,7 @@
 class Products {
   const Products({
     required this.id,
+    required this.categories,
     required this.productName,
     required this.productMainImage,
     required this.productImage,
@@ -11,6 +12,7 @@ class Products {
   });
 
   final String id;
+  final List<String> categories;
   final String productName;
   final String productMainImage;
   final List productImage;
