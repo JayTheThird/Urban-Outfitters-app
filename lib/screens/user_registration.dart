@@ -2,26 +2,23 @@
 import 'package:flutter/material.dart';
 // project file
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/screens/user_registration.dart';
+import 'package:ecommerce/screens/user_login.dart';
 import 'package:ecommerce/widgets/user_textfield.dart';
 import 'package:ecommerce/widgets/app_logo_square_tile.dart';
-import 'package:ecommerce/screens/user_forgot_password.dart';
-import 'package:ecommerce/screens/persistent_nav_bar.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Registration extends StatefulWidget {
+  const Registration({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Registration> createState() => _RegistrationState();
 }
 
-class _LoginState extends State<Login> {
+class _RegistrationState extends State<Registration> {
   // text editing controllers
+  final userNameController = TextEditingController();
+  final contactController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  // sign user in method
-  void signUserIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +30,10 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // welcome back, you've been missed!
+                SizedBox(height: 20),
+                // Welcome to Urban Outfitter's
                 Text(
-                  'Welcome back you\'ve been missed!',
+                  "Welcome to Urban Outfitter's",
                   style: TextStyle(
                     color: style.color1,
                     fontSize: 18,
@@ -43,6 +41,22 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 25),
                 // username textfield
+                MyTextField(
+                  controller: userNameController,
+                  hintText: 'User Name',
+                  keyboardType: TextInputType.name,
+                  obscureText: false,
+                ),
+                SizedBox(height: 12),
+                // contact number textfield
+                MyTextField(
+                  controller: contactController,
+                  keyboardType: TextInputType.number,
+                  hintText: 'Contact Number',
+                  obscureText: false,
+                ),
+                SizedBox(height: 12),
+                // email textfield
                 MyTextField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -57,42 +71,10 @@ class _LoginState extends State<Login> {
                   hintText: 'Password',
                   obscureText: true,
                 ),
-                SizedBox(height: 10),
-                // forgot password?
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (ctx) => ForgotPassword(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            color: style.color2,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 25),
-                // log in button
+                SizedBox(height: 12),
+                // Registration in button
                 GestureDetector(
-                onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => Tabs(),
-                      ),
-                    );
-                  },
+                  onTap: () {},
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -102,7 +84,7 @@ class _LoginState extends State<Login> {
                     ),
                     child: const Center(
                       child: Text(
-                        "Log In",
+                        "Registration",
                         style: TextStyle(
                           color: Colors.white,
                           // letterSpacing: 2,
@@ -113,7 +95,37 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 15),
+                // not a member? Login now
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Already a member?',
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
+                    SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => Login(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Login now',
+                        style: TextStyle(
+                          color: style.color2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
                 // or continue with
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -153,36 +165,6 @@ class _LoginState extends State<Login> {
                     SquareTile(imagePath: 'assets/images/apple.png')
                   ],
                 ),
-                SizedBox(height: 20),
-                // not a member? register now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Not a member?',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                    SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => Registration(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'Register now',
-                        style: TextStyle(
-                          color: style.color2,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           ),

@@ -1,23 +1,28 @@
-import 'package:ecommerce/main.dart';
+// main files
 import 'package:flutter/material.dart';
+// project files
+import 'package:ecommerce/main.dart';
 
 class MyTextField extends StatelessWidget {
-  final controller;
-  final String hintText;
-  final bool obscureText;
-
   const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    required this.keyboardType,
   });
+
+  final TextEditingController controller;
+  final String hintText;
+  final bool obscureText;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
+        keyboardType: keyboardType,
         controller: controller,
         obscureText: obscureText,
         cursorColor: style.color2,

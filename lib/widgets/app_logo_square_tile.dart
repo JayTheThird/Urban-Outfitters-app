@@ -1,5 +1,7 @@
-import 'package:ecommerce/main.dart';
+// main files
 import 'package:flutter/material.dart';
+// project files
+import 'package:ecommerce/main.dart';
 
 class SquareTile extends StatelessWidget {
   final String imagePath;
