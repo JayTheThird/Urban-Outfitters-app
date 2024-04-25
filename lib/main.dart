@@ -1,11 +1,10 @@
 // main files
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 // project files
-import 'package:ecommerce/screens/persistent_nav_bar.dart';
+import 'package:ecommerce/screens/user_login.dart';
 import 'package:ecommerce/widgets/support_styling_widget.dart';
 
 // created style object of SupportStylingClass
@@ -50,7 +49,7 @@ class App extends StatelessWidget {
           home: Scaffold(
             resizeToAvoidBottomInset: false,
             body: Center(
-              child: Tabs(),
+              child: Login(),
             ),
           ),
         );
