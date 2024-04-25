@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "454992340893",
+    "project_id": "urban-outfitter",
+    "storage_bucket": "urban-outfitter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454992340893:android:3b1e04c33a23379a22f174",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuNbRcNw1BtGKL9EWD1nMqT7JF6jxEqRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
