@@ -22,6 +22,7 @@ class MyTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
+        
         keyboardType: keyboardType,
         controller: controller,
         obscureText: obscureText,
@@ -55,3 +56,5 @@ class MyTextField extends StatelessWidget {
     );
   }
 }
+
+

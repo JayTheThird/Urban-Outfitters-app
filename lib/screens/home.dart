@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/data/dummy_data.dart';
 import 'package:ecommerce/widgets/category/category_display.dart';
-import 'package:ecommerce/widgets/search_bar.dart';
-import 'package:ecommerce/widgets/main_header.dart';
+import 'package:ecommerce/widgets/supportingWidgets/search_bar.dart';
+import 'package:ecommerce/widgets/supportingWidgets/main_header.dart';
 import 'package:ecommerce/widgets/products/product_display.dart';
-import 'package:ecommerce/widgets/title_tile.dart';
+import 'package:ecommerce/widgets/supportingWidgets/title_tile.dart';
 import 'package:ecommerce/widgets/category/all_category.dart';
 import 'package:ecommerce/screens/all_products.dart';
 

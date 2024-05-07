@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/user_login.dart';
-import 'package:ecommerce/widgets/user_textfield.dart';
+import 'package:ecommerce/widgets/supportingWidgets/user_textfield.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});

@@ -1,10 +1,14 @@
 // main files
+import 'package:ecommerce/screens/persistent_nav_bar.dart';
+import 'package:ecommerce/widgets/supportingWidgets/validations.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce/widgets/auth/auth_services.dart';
+import 'package:logging/logging.dart';
 // project file
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/user_login.dart';
-import 'package:ecommerce/widgets/user_textfield.dart';
-import 'package:ecommerce/widgets/app_logo_square_tile.dart';
+import 'package:ecommerce/widgets/supportingWidgets/user_textfield.dart';
+import 'package:ecommerce/widgets/supportingWidgets/app_logo_square_tile.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -14,11 +18,26 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  final _auth = AuthServices();
+
+  // console.log using logger package
+  final log = Logger("AuthServices");
+
+  SupportingValidation validation = SupportingValidation();
+
   // text editing controllers
   final userNameController = TextEditingController();
-  final contactController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // disposing the texteditingcontroller
+  @override
+  void dispose() {
+    userNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +66,14 @@ class _RegistrationState extends State<Registration> {
                   keyboardType: TextInputType.name,
                   obscureText: false,
                 ),
-                SizedBox(height: 12),
+                // SizedBox(height: 12),
                 // contact number textfield
-                MyTextField(
-                  controller: contactController,
-                  keyboardType: TextInputType.number,
-                  hintText: 'Contact Number',
-                  obscureText: false,
-                ),
+                // MyTextField(
+                //   controller: contactController,
+                //   keyboardType: TextInputType.number,
+                //   hintText: 'Contact Number',
+                //   obscureText: false,
+                // ),
                 SizedBox(height: 12),
                 // email textfield
                 MyTextField(
@@ -74,7 +93,7 @@ class _RegistrationState extends State<Registration> {
                 SizedBox(height: 12),
                 // Registration in button
                 GestureDetector(
-                  onTap: () {},
+                  onTap: _userSignUp,
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -171,5 +190,48 @@ class _RegistrationState extends State<Registration> {
         ),
       ),
     );
+  }
+
+  _userSignUp() async {
+    // Check if email is empty
+    validation.textFieldCantBeEmpty(
+        emailController, context, "Email can't be empty");
+
+    // Check if password is empty
+    validation.textFieldCantBeEmpty(
+        passwordController, context, "Password can't be empty");
+
+    // Check if username is empty
+    validation.textFieldCantBeEmpty(
+        userNameController, context, "Username can't be empty");
+
+    // Check if email is valid
+    // validation.textFieldCantBeEmpty(
+    //     emailController, context, "Invalid email format");
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+        .hasMatch(emailController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Invalid email format"),
+        ),
+      );
+      return;
+    }
+
+    // Check if password meets minimum length requirement
+    validation.passwordLength(passwordController, context,
+        "Password must be at least 6 characters long");
+
+    // Perform user registration if all validations pass
+    final user = await _auth.registerUserWithEmailAndPassword(
+        emailController.text, passwordController.text);
+    if (user != null) {
+      log.info("User Created Successfully");
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => Tabs(),
+        ),
+      );
+    }
   }
 }

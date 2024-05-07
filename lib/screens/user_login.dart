@@ -1,12 +1,14 @@
 // main files
+import 'package:ecommerce/widgets/auth/auth_services.dart';
 import 'package:flutter/material.dart';
 // project file
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/user_registration.dart';
-import 'package:ecommerce/widgets/user_textfield.dart';
-import 'package:ecommerce/widgets/app_logo_square_tile.dart';
+import 'package:ecommerce/widgets/supportingWidgets/user_textfield.dart';
+import 'package:ecommerce/widgets/supportingWidgets/app_logo_square_tile.dart';
 import 'package:ecommerce/screens/user_forgot_password.dart';
 import 'package:ecommerce/screens/persistent_nav_bar.dart';
+import 'package:ecommerce/widgets/supportingWidgets/validations.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -16,12 +18,21 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final auth = AuthServices();
+
+  SupportingValidation validation = SupportingValidation();
+
   // text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // sign user in method
-  void signUserIn() {}
+  // disposing the texteditingcontroller
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,28 +97,31 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 25),
                 // log in button
                 GestureDetector(
-                onTap: () {
+                  onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (ctx) => Tabs(),
                       ),
                     );
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: style.color2,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                          color: Colors.white,
-                          // letterSpacing: 2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                  child: GestureDetector(
+                    onTap: _userLogin,
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: style.color2,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "Log In",
+                          style: TextStyle(
+                            color: Colors.white,
+                            // letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -189,5 +203,41 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  // sign user in method
+  void _userLogin() async {
+    // Check if email is empty
+    validation.textFieldCantBeEmpty(
+        emailController, context, "Email can't be empty");
+
+    // Check if password is empty
+    validation.textFieldCantBeEmpty(
+        passwordController, context, "Password can't be empty");
+
+    // Check if email is valid
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+        .hasMatch(emailController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Invalid email format"),
+        ),
+      );
+      return;
+    }
+
+    // Check if password meets minimum length requirement
+    validation.passwordLength(passwordController, context,
+        "Password must be at least 6 characters long");
+
+    final user = await auth.loginUserWithEmailAndPassword(
+        emailController.text, passwordController.text);
+    if (user != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => Tabs(),
+        ),
+      );
+    }
   }
 }
