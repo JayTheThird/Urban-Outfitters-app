@@ -1,14 +1,14 @@
 // main files
 import 'package:ecommerce/screens/persistent_nav_bar.dart';
-import 'package:ecommerce/widgets/supportingWidgets/validations.dart';
+import 'package:ecommerce/widgets/utilities/support_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/widgets/auth/auth_services.dart';
-import 'package:logging/logging.dart';
+
 // project file
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/user_login.dart';
-import 'package:ecommerce/widgets/supportingWidgets/user_textfield.dart';
-import 'package:ecommerce/widgets/supportingWidgets/app_logo_square_tile.dart';
+import 'package:ecommerce/widgets/utilities/user_textfield.dart';
+import 'package:ecommerce/widgets/utilities/app_logo_square_tile.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -20,10 +20,7 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   final _auth = AuthServices();
 
-  // console.log using logger package
-  final log = Logger("AuthServices");
-
-  SupportingValidation validation = SupportingValidation();
+  SupportingWidgets supportingWidgets = SupportingWidgets();
 
   // text editing controllers
   final userNameController = TextEditingController();
@@ -193,45 +190,54 @@ class _RegistrationState extends State<Registration> {
   }
 
   _userSignUp() async {
+    // Check if username is empty
+    supportingWidgets.textFieldCantBeEmpty(
+        userNameController, context, "Username can't be empty");
+
     // Check if email is empty
-    validation.textFieldCantBeEmpty(
+    supportingWidgets.textFieldCantBeEmpty(
         emailController, context, "Email can't be empty");
 
     // Check if password is empty
-    validation.textFieldCantBeEmpty(
+    supportingWidgets.textFieldCantBeEmpty(
         passwordController, context, "Password can't be empty");
 
-    // Check if username is empty
-    validation.textFieldCantBeEmpty(
-        userNameController, context, "Username can't be empty");
-
     // Check if email is valid
-    // validation.textFieldCantBeEmpty(
-    //     emailController, context, "Invalid email format");
-    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-        .hasMatch(emailController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Invalid email format"),
-        ),
-      );
-      return;
-    }
+    supportingWidgets.textFieldEmailValid(
+        emailController, context, "Invalid email formate");
 
     // Check if password meets minimum length requirement
-    validation.passwordLength(passwordController, context,
+    supportingWidgets.passwordLength(passwordController, context,
         "Password must be at least 6 characters long");
 
     // Perform user registration if all validations pass
     final user = await _auth.registerUserWithEmailAndPassword(
         emailController.text, passwordController.text);
     if (user != null) {
-      log.info("User Created Successfully");
+      supportingWidgets.successSnackBar(context, "Registration Successful");
+      // delayed till 1 seconds
+      await Future.delayed(Duration(seconds: 1));
+      //Removes the current SnackBar.
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      // clear the text editing controller values
+      userNameController.clear();
+      emailController.clear();
+      passwordController.clear();
+      // navigating to tabs screen
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => Tabs(),
         ),
       );
+    } else {
+      supportingWidgets.alertSnackBar(context, "User already Exits");
+      await Future.delayed(Duration(seconds: 2));
+      //Removes the current SnackBar.
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      // clear the text editing controller values
+      userNameController.clear();
+      emailController.clear();
+      passwordController.clear();
     }
   }
 }

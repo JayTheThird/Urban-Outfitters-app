@@ -1,14 +1,15 @@
 // main files
-import 'package:ecommerce/widgets/auth/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce/widgets/auth/auth_services.dart';
+
 // project file
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/user_registration.dart';
-import 'package:ecommerce/widgets/supportingWidgets/user_textfield.dart';
-import 'package:ecommerce/widgets/supportingWidgets/app_logo_square_tile.dart';
+import 'package:ecommerce/widgets/utilities/user_textfield.dart';
+import 'package:ecommerce/widgets/utilities/app_logo_square_tile.dart';
 import 'package:ecommerce/screens/user_forgot_password.dart';
 import 'package:ecommerce/screens/persistent_nav_bar.dart';
-import 'package:ecommerce/widgets/supportingWidgets/validations.dart';
+import 'package:ecommerce/widgets/utilities/support_widgets.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -20,7 +21,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final auth = AuthServices();
 
-  SupportingValidation validation = SupportingValidation();
+  SupportingWidgets supportingWidgets = SupportingWidgets();
 
   // text editing controllers
   final emailController = TextEditingController();
@@ -208,36 +209,56 @@ class _LoginState extends State<Login> {
   // sign user in method
   void _userLogin() async {
     // Check if email is empty
-    validation.textFieldCantBeEmpty(
+    supportingWidgets.textFieldCantBeEmpty(
         emailController, context, "Email can't be empty");
 
     // Check if password is empty
-    validation.textFieldCantBeEmpty(
+    supportingWidgets.textFieldCantBeEmpty(
         passwordController, context, "Password can't be empty");
 
     // Check if email is valid
-    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-        .hasMatch(emailController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Invalid email format"),
-        ),
-      );
-      return;
-    }
+    supportingWidgets.textFieldEmailValid(
+        emailController, context, "Invalid email formate");
 
     // Check if password meets minimum length requirement
-    validation.passwordLength(passwordController, context,
+    supportingWidgets.passwordLength(passwordController, context,
         "Password must be at least 6 characters long");
 
     final user = await auth.loginUserWithEmailAndPassword(
         emailController.text, passwordController.text);
     if (user != null) {
+      // user have account
+      supportingWidgets.successSnackBar(context, "Login Successful");
+      // delayed till 1 seconds
+      await Future.delayed(Duration(seconds: 1));
+      //Removes the current SnackBar.
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      // clear the text editing controller values
+      emailController.clear();
+      passwordController.clear();
+      // navigating to tabs screen
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => Tabs(),
         ),
       );
+    } else if (user == null) {
+      // user didn't have account
+      supportingWidgets.alertSnackBar(context, "User didn't Exits");
+      await Future.delayed(Duration(seconds: 2));
+      //Removes the current SnackBar.
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      // clear the text editing controller values
+      emailController.clear();
+      passwordController.clear();
+    } else {
+      supportingWidgets.alertSnackBar(context, "Invalid email or Password");
+      await Future.delayed(Duration(seconds: 2));
+      //Removes the current SnackBar.
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      // clear the text editing controller values
+      emailController.clear();
+      passwordController.clear();
     }
   }
 }

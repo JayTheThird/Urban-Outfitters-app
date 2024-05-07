@@ -46,8 +46,7 @@ dependencies:
   iconify_flutter: ^0.0.5
   firebase_core: ^2.30.1
   firebase_auth: ^4.19.4
-  # logging
-  logging: ^1.2.0
+  flutter_icon_snackbar: ^1.1.7
 
 dev_dependencies:
   flutter_test:

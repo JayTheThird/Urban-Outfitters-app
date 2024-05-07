@@ -1,11 +1,9 @@
-import 'package:logging/logging.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 
 class AuthServices {
   // The entry point of the Firebase Authentication SDK.
   final _auth = FirebaseAuth.instance;
-  // console.log using logger package
-  final log = Logger("AuthServices");
 
   // Login
   Future<User?> loginUserWithEmailAndPassword(
@@ -17,7 +15,7 @@ class AuthServices {
           password: password);
       return cred.user;
     } catch (e) {
-      log.warning("Some thing went wrong");
+      log("Something went wrong");
     }
     return null;
   }
@@ -33,7 +31,7 @@ class AuthServices {
 
       return cred.user;
     } catch (e) {
-      log.warning("Something went wrong");
+      log("Something went wrong");
     }
     return null;
   }
@@ -43,7 +41,7 @@ class AuthServices {
     try {
       await _auth.signOut(); //Signs out the current user
     } catch (e) {
-      log.warning("Something Went Wrong");
+      log("Something went wrong");
     }
   }
 }

@@ -48,11 +48,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   _userSignOut() {
-    // auth.userSignOut();
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (ctx) => Tabs(),
-    //   ),
-    // );
+    auth.userSignOut();
+
   }
 }
