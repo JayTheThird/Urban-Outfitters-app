@@ -1,5 +1,6 @@
 // main files
 import 'package:ecommerce/screens/persistent_nav_bar.dart';
+import 'package:ecommerce/widgets/utilities/buttons.dart';
 import 'package:ecommerce/widgets/utilities/support_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/widgets/auth/auth_services.dart';
@@ -89,28 +90,7 @@ class _RegistrationState extends State<Registration> {
                 ),
                 SizedBox(height: 12),
                 // Registration in button
-                GestureDetector(
-                  onTap: _userSignUp,
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: style.color2,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Registration",
-                        style: TextStyle(
-                          color: Colors.white,
-                          // letterSpacing: 2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                LoginSignUpButtons(onTap: _userSignUp, message: "Sign up"),
                 SizedBox(height: 15),
                 // not a member? Login now
                 Row(

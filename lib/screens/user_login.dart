@@ -1,4 +1,5 @@
 // main files
+import 'package:ecommerce/widgets/utilities/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/widgets/auth/auth_services.dart';
 
@@ -97,37 +98,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 25),
                 // log in button
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => Tabs(),
-                      ),
-                    );
-                  },
-                  child: GestureDetector(
-                    onTap: _userLogin,
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: style.color2,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Log In",
-                          style: TextStyle(
-                            color: Colors.white,
-                            // letterSpacing: 2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                LoginSignUpButtons(onTap: _userLogin, message: "Log in"),
                 SizedBox(height: 30),
                 // or continue with
                 Padding(
@@ -225,7 +196,9 @@ class _LoginState extends State<Login> {
         "Password must be at least 6 characters long");
 
     final user = await auth.loginUserWithEmailAndPassword(
-        emailController.text, passwordController.text);
+      emailController.text.trim(),
+      passwordController.text.trim(),
+    );
     if (user != null) {
       // user have account
       supportingWidgets.successSnackBar(context, "Login Successful");
