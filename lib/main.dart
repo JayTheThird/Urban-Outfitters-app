@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 // project files
-import 'package:ecommerce/screens/user_login.dart';
+import 'package:ecommerce/screens/wrapper.dart';
 import 'package:ecommerce/widgets/utilities/support_styling_widget.dart';
 
 // created style object of SupportStylingClass
@@ -68,7 +68,7 @@ class App extends StatelessWidget {
           home: Scaffold(
             resizeToAvoidBottomInset: false,
             body: Center(
-              child: Login(),
+              child: Wrapper(), // when the app start it goes to wrapper screen
             ),
           ),
         );

@@ -1,7 +1,7 @@
 // main files
 import 'package:ecommerce/widgets/utilities/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/widgets/auth/auth_services.dart';
+import 'package:ecommerce/widgets/services/auth/auth_services.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
@@ -22,7 +22,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final auth = AuthServices();
 
-  SupportingWidgets supportingWidgets = SupportingWidgets();
+  final supportingWidgets = SupportingWidgets();
 
   // text editing controllers
   final emailController = TextEditingController();
@@ -177,6 +177,12 @@ class _LoginState extends State<Login> {
     );
   }
 
+  // clear values of text editing controller
+  void clearTextEditingController() {
+    emailController.clear();
+    passwordController.clear();
+  }
+
   // sign user in method
   void _userLogin() async {
     // Check if email is empty
@@ -198,6 +204,7 @@ class _LoginState extends State<Login> {
     final user = await auth.loginUserWithEmailAndPassword(
       emailController.text.trim(),
       passwordController.text.trim(),
+      context,
     );
     if (user != null) {
       // user have account
@@ -207,8 +214,7 @@ class _LoginState extends State<Login> {
       //Removes the current SnackBar.
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       // clear the text editing controller values
-      emailController.clear();
-      passwordController.clear();
+      clearTextEditingController();
       // navigating to tabs screen
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -218,14 +224,6 @@ class _LoginState extends State<Login> {
     } else if (user == null) {
       // user didn't have account
       supportingWidgets.alertSnackBar(context, "User didn't Exits");
-      await Future.delayed(Duration(seconds: 2));
-      //Removes the current SnackBar.
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      // clear the text editing controller values
-      emailController.clear();
-      passwordController.clear();
-    } else {
-      supportingWidgets.alertSnackBar(context, "Invalid email or Password");
       await Future.delayed(Duration(seconds: 2));
       //Removes the current SnackBar.
       ScaffoldMessenger.of(context).removeCurrentSnackBar();

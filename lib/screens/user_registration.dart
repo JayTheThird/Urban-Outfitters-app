@@ -1,15 +1,18 @@
 // main files
 import 'package:ecommerce/screens/persistent_nav_bar.dart';
-import 'package:ecommerce/widgets/utilities/buttons.dart';
-import 'package:ecommerce/widgets/utilities/support_widgets.dart';
+import 'package:ecommerce/widgets/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/widgets/auth/auth_services.dart';
+import 'package:random_string/random_string.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/user_login.dart';
 import 'package:ecommerce/widgets/utilities/user_textfield.dart';
 import 'package:ecommerce/widgets/utilities/app_logo_square_tile.dart';
+import 'package:ecommerce/widgets/services/database/database.dart';
+import 'package:ecommerce/widgets/services/auth/auth_services.dart';
+import 'package:ecommerce/widgets/utilities/support_widgets.dart';
+import 'package:ecommerce/widgets/utilities/buttons.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -20,8 +23,9 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
   final _auth = AuthServices();
-
-  SupportingWidgets supportingWidgets = SupportingWidgets();
+  final supportingWidgets = SupportingWidgets();
+  final databaseMethods = Database();
+  final sharedPref = SharedPreference();
 
   // text editing controllers
   final userNameController = TextEditingController();
@@ -169,7 +173,15 @@ class _RegistrationState extends State<Registration> {
     );
   }
 
+  // clear values of text editing controller
+  void clearTextEditingController() {
+    userNameController.clear();
+    emailController.clear();
+    passwordController.clear();
+  }
+
   _userSignUp() async {
+    String id = randomAlphaNumeric(10);
     // Check if username is empty
     supportingWidgets.textFieldCantBeEmpty(
         userNameController, context, "Username can't be empty");
@@ -192,17 +204,35 @@ class _RegistrationState extends State<Registration> {
 
     // Perform user registration if all validations pass
     final user = await _auth.registerUserWithEmailAndPassword(
-        emailController.text, passwordController.text);
+        emailController.text, passwordController.text, context);
     if (user != null) {
       supportingWidgets.successSnackBar(context, "Registration Successful");
+
+      // Storing user data locally
+      await sharedPref.saveUserId(id);
+      await sharedPref.saveUserName(userNameController.text);
+      await sharedPref.saveUserEmail(emailController.text);
+      await sharedPref.saveUserImage("ecommerce/assets/images/user2.png");
+
+      // sending user info to firestore
+      Map<String, dynamic> userInfo = {
+        "Id": id,
+        "UserName": userNameController.text.trim(),
+        "Email": emailController.text.trim(),
+        "UserImage": "ecommerce/assets/images/user2.png",
+      };
+      // add data to users in firestore
+      await databaseMethods.addUserDetails(userInfo, id);
+
       // delayed till 1 seconds
       await Future.delayed(Duration(seconds: 1));
+
       //Removes the current SnackBar.
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
       // clear the text editing controller values
-      userNameController.clear();
-      emailController.clear();
-      passwordController.clear();
+      clearTextEditingController();
+
       // navigating to tabs screen
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -212,12 +242,12 @@ class _RegistrationState extends State<Registration> {
     } else {
       supportingWidgets.alertSnackBar(context, "User already Exits");
       await Future.delayed(Duration(seconds: 2));
+
       //Removes the current SnackBar.
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
       // clear the text editing controller values
-      userNameController.clear();
-      emailController.clear();
-      passwordController.clear();
+      clearTextEditingController();
     }
   }
 }
