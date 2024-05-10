@@ -1,4 +1,6 @@
 // main files
+import 'package:ecommerce/widgets/services/database/database.dart';
+import 'package:ecommerce/widgets/services/shared_preferences.dart';
 import 'package:ecommerce/widgets/utilities/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/widgets/services/auth/auth_services.dart';
@@ -11,6 +13,7 @@ import 'package:ecommerce/widgets/utilities/app_logo_square_tile.dart';
 import 'package:ecommerce/screens/user_forgot_password.dart';
 import 'package:ecommerce/screens/persistent_nav_bar.dart';
 import 'package:ecommerce/widgets/utilities/support_widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -21,12 +24,16 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final auth = AuthServices();
-
   final supportingWidgets = SupportingWidgets();
+  final databaseMethods = Database();
+  final sharedPref = SharedPreference();
 
   // text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  bool isLoading = false;
+  bool isLoadingGoogle = false;
 
   // disposing the texteditingcontroller
   @override
@@ -98,7 +105,13 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 25),
                 // log in button
-                LoginSignUpButtons(onTap: _userLogin, message: "Log in"),
+                isLoading
+                    ? SpinKitWave(
+                        color: style.color1,
+                        duration: Duration(seconds: 5),
+                      )
+                    : LoginSignUpButtons(onTap: _userLogin, message: "Log in"),
+
                 SizedBox(height: 30),
                 // or continue with
                 Padding(
@@ -131,12 +144,23 @@ class _LoginState extends State<Login> {
                 // google + apple sign in buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     // google button
-                    SquareTile(imagePath: 'assets/images/google.png'),
+                    isLoadingGoogle
+                        ? SpinKitWave(
+                            color: style.color1,
+                            duration: Duration(seconds: 5),
+                          )
+                        : SquareTile(
+                            imagePath: 'assets/images/google.png',
+                            onTap: _googleSignIn,
+                          ),
                     SizedBox(width: 25),
                     // apple button
-                    SquareTile(imagePath: 'assets/images/apple.png')
+                    SquareTile(
+                      imagePath: 'assets/images/apple.png',
+                      onTap: () {},
+                    )
                   ],
                 ),
                 SizedBox(height: 20),
@@ -183,6 +207,65 @@ class _LoginState extends State<Login> {
     passwordController.clear();
   }
 
+  // void _googleSignIn() async {
+  //   setState(() {
+  //     isLoadingGoogle = true;
+  //   });
+  //   await auth.loginWithGoogle();
+
+  //   // sending user info to firestore
+  //   Map<String, dynamic> userInfo = {
+  //     // "Id": id,
+  //     "UserName": userNameController.text.trim(),
+  //     "Email": auth.loginWithGoogle().,
+  //     "UserImage": "ecommerce/assets/images/user2.png",
+  //   };
+  //   // add data to users in firestore
+  //   await databaseMethods.addUserDetails(userInfo, id);
+  //   setState(() {
+  //     isLoadingGoogle = false;
+  //   });
+  // }
+
+  void _googleSignIn() async {
+    setState(() {
+      isLoadingGoogle = true;
+    });
+
+    // Perform Google sign-in
+    final userCredential = await auth.loginWithGoogle();
+
+    // User signed in successfully with Google
+    if (userCredential != null) {
+      // Extract user information
+      String userName = userCredential.user!.displayName ?? "";
+      String email = userCredential.user!.email ?? "";
+      String userImage = userCredential.user!.photoURL ?? "";
+
+      // Create user info map
+      Map<String, dynamic> userInfo = {
+        "Type": "Google",
+        "UserName": userName,
+        "Email": email,
+        "UserImage": userImage,
+      };
+
+      // Add user information to Firestore
+      await databaseMethods.addUserDetails(userInfo, userCredential.user!.uid);
+
+      // Update state
+      setState(() {
+        isLoadingGoogle = false;
+      });
+    } else {
+      // Failed to sign in with Google
+      setState(() {
+        isLoadingGoogle = false;
+      });
+      supportingWidgets.alertSnackBar(context, "Failed to sign in with Google");
+    }
+  }
+
   // sign user in method
   void _userLogin() async {
     // Check if email is empty
@@ -201,12 +284,19 @@ class _LoginState extends State<Login> {
     supportingWidgets.passwordLength(passwordController, context,
         "Password must be at least 6 characters long");
 
+    setState(() {
+      isLoading = true;
+    });
+
     final user = await auth.loginUserWithEmailAndPassword(
       emailController.text.trim(),
       passwordController.text.trim(),
       context,
     );
     if (user != null) {
+      setState(() {
+        isLoading = false;
+      });
       // user have account
       supportingWidgets.successSnackBar(context, "Login Successful");
       // delayed till 1 seconds

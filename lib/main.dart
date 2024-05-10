@@ -17,15 +17,27 @@ void main() async {
 
   // firebase
   Platform.isAndroid
-      ? await Firebase.initializeApp(
-          options: FirebaseOptions(
-            apiKey: "AIzaSyDuNbRcNw1BtGKL9EWD1nMqT7JF6jxEqRc",
-            appId: "1:454992340893:android:3b1e04c33a23379a22f174",
-            messagingSenderId: "454992340893",
-            projectId: "urban-outfitter",
+      ? {
+          await Firebase.initializeApp(
+            options: FirebaseOptions(
+              apiKey: "AIzaSyDuNbRcNw1BtGKL9EWD1nMqT7JF6jxEqRc",
+              appId: "1:454992340893:android:3b1e04c33a23379a22f174",
+              messagingSenderId: "454992340893",
+              projectId: "urban-outfitter",
+            ),
           ),
-        )
-      : await Firebase.initializeApp();
+          // for native splash
+          FlutterNativeSplash.preserve(widgetsBinding: wb),
+          await Future.delayed(Duration(seconds: 1)),
+          FlutterNativeSplash.remove(),
+        }
+      : {
+          await Firebase.initializeApp(),
+          // for native splash
+          FlutterNativeSplash.preserve(widgetsBinding: wb),
+          await Future.delayed(Duration(seconds: 1)),
+          FlutterNativeSplash.remove(),
+        };
 
   if (kIsWeb) {
     await Firebase.initializeApp(
@@ -39,11 +51,6 @@ void main() async {
       ),
     );
   }
-
-  // // for native splash
-  FlutterNativeSplash.preserve(widgetsBinding: wb);
-  await Future.delayed(Duration(seconds: 1));
-  FlutterNativeSplash.remove();
 
   runApp(
     const App(),

@@ -3,10 +3,33 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
   // The entry point of the Firebase Authentication SDK.
   final _auth = FirebaseAuth.instance;
+
+  // login with google
+  Future<UserCredential?> loginWithGoogle() async {
+    try {
+      // Initializes global sign-in configuration settings.
+      /*
+      Starts the interactive sign-in process.Returned Future resolves to an instance of [GoogleSignInAccount] for a successful sign in or null in case sign in process was aborted.
+      Authentication process is triggered only if there is no currently signed in user (that is when currentUser == null), otherwise this method returns a Future which resolves to the same user instance.
+      Re-authentication can be triggered only after [signOut] or [disconnect].
+      */
+      final googleUser = await GoogleSignIn().signIn();
+      final googleAuthentication = await googleUser?.authentication;
+      final cred = GoogleAuthProvider.credential(
+        idToken: googleAuthentication?.idToken,
+        accessToken: googleAuthentication?.accessToken,
+      );
+      return await _auth.signInWithCredential(cred);
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
 
   // Login
   Future<User?> loginUserWithEmailAndPassword(

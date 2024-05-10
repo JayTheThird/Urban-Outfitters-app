@@ -2,13 +2,13 @@
 import 'package:ecommerce/screens/persistent_nav_bar.dart';
 import 'package:ecommerce/widgets/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:random_string/random_string.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/user_login.dart';
 import 'package:ecommerce/widgets/utilities/user_textfield.dart';
-import 'package:ecommerce/widgets/utilities/app_logo_square_tile.dart';
 import 'package:ecommerce/widgets/services/database/database.dart';
 import 'package:ecommerce/widgets/services/auth/auth_services.dart';
 import 'package:ecommerce/widgets/utilities/support_widgets.dart';
@@ -26,6 +26,8 @@ class _RegistrationState extends State<Registration> {
   final supportingWidgets = SupportingWidgets();
   final databaseMethods = Database();
   final sharedPref = SharedPreference();
+
+  bool isLoading = false;
 
   // text editing controllers
   final userNameController = TextEditingController();
@@ -94,7 +96,15 @@ class _RegistrationState extends State<Registration> {
                 ),
                 SizedBox(height: 12),
                 // Registration in button
-                LoginSignUpButtons(onTap: _userSignUp, message: "Sign up"),
+                isLoading
+                    ? SpinKitWave(
+                        color: style.color1,
+                        duration: Duration(seconds: 5),
+                      )
+                    : LoginSignUpButtons(
+                        onTap: _userSignUp,
+                        message: "Sign up",
+                      ),
                 SizedBox(height: 15),
                 // not a member? Login now
                 Row(
@@ -127,44 +137,44 @@ class _RegistrationState extends State<Registration> {
                 ),
                 SizedBox(height: 20),
                 // or continue with
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'Or continue with',
-                          style: TextStyle(color: style.color2),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                // google + apple sign in buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    // google button
-                    SquareTile(imagePath: 'assets/images/google.png'),
-                    SizedBox(width: 25),
-                    // apple button
-                    SquareTile(imagePath: 'assets/images/apple.png')
-                  ],
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         child: Divider(
+                //           thickness: 0.5,
+                //           color: Colors.grey[400],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                //         child: Text(
+                //           'Or continue with',
+                //           style: TextStyle(color: style.color2),
+                //         ),
+                //       ),
+                //       Expanded(
+                //         child: Divider(
+                //           thickness: 0.5,
+                //           color: Colors.grey[400],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(height: 20),
+                // // google + apple sign in buttons
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: const [
+                //     // google button
+                //     // SquareTile(imagePath: 'assets/images/google.png'),
+                //     SizedBox(width: 25),
+                //     // apple button
+                //     // SquareTile(imagePath: 'assets/images/apple.png')
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -202,10 +212,18 @@ class _RegistrationState extends State<Registration> {
     supportingWidgets.passwordLength(passwordController, context,
         "Password must be at least 6 characters long");
 
+    setState(() {
+      isLoading = true;
+    });
+
     // Perform user registration if all validations pass
     final user = await _auth.registerUserWithEmailAndPassword(
         emailController.text, passwordController.text, context);
     if (user != null) {
+      setState(() {
+        isLoading = false;
+      });
+
       supportingWidgets.successSnackBar(context, "Registration Successful");
 
       // Storing user data locally
@@ -217,6 +235,7 @@ class _RegistrationState extends State<Registration> {
       // sending user info to firestore
       Map<String, dynamic> userInfo = {
         "Id": id,
+        "Type" : "Urban-outfitter",
         "UserName": userNameController.text.trim(),
         "Email": emailController.text.trim(),
         "UserImage": "ecommerce/assets/images/user2.png",
@@ -240,6 +259,9 @@ class _RegistrationState extends State<Registration> {
         ),
       );
     } else {
+      setState(() {
+        isLoading = false;
+      });
       supportingWidgets.alertSnackBar(context, "User already Exits");
       await Future.delayed(Duration(seconds: 2));
 

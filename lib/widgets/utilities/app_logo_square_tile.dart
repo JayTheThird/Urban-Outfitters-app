@@ -3,17 +3,25 @@ import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/main.dart';
 
-class SquareTile extends StatelessWidget {
-  final String imagePath;
+class SquareTile extends StatefulWidget {
   const SquareTile({
     super.key,
     required this.imagePath,
+    required this.onTap,
   });
 
+  final String imagePath;
+  final void Function() onTap;
+
+  @override
+  State<SquareTile> createState() => _SquareTileState();
+}
+
+class _SquareTileState extends State<SquareTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: widget.onTap,
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -22,7 +30,7 @@ class SquareTile extends StatelessWidget {
           // color: Colors.grey[200],
         ),
         child: Image.asset(
-          imagePath,
+          widget.imagePath,
           height: 40,
         ),
       ),
