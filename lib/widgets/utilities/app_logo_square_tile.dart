@@ -31,6 +31,7 @@ class _SquareTileState extends State<SquareTile> {
         ),
         child: Image.asset(
           widget.imagePath,
+          fit: BoxFit.cover,
           height: 40,
         ),
       ),

@@ -58,7 +58,7 @@ void main() async {
 }
 
 final theme = ThemeData(
-  textTheme: GoogleFonts.ralewayTextTheme(),
+  textTheme: GoogleFonts.latoTextTheme(),
 );
 
 class App extends StatelessWidget {

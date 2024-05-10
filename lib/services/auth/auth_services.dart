@@ -1,9 +1,11 @@
-import 'package:ecommerce/widgets/utilities/support_widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:developer';
-
+// main files
 import 'package:flutter/material.dart';
+import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+//  Project files
+import 'package:ecommerce/widgets/utilities/support_widgets.dart';
 
 class AuthServices {
   // The entry point of the Firebase Authentication SDK.
@@ -28,6 +30,25 @@ class AuthServices {
     } catch (e) {
       print(e.toString());
     }
+    return null;
+  }
+
+  // login in with facebook
+  Future<UserCredential?> loginWithFacebook() async {
+    try {
+      // this class implements the FacebookAuthPlatform interface and calls to the native APIs on Android, iOS and web.
+      final facebookAuth = await FacebookAuth.instance.login();
+
+      // Create a credential from the access token
+      final cred = FacebookAuthProvider.credential(
+        facebookAuth.accessToken!.token,
+      );
+
+      return await _auth.signInWithCredential(cred);
+    } catch (e) {
+      print(e.toString());
+    }
+
     return null;
   }
 

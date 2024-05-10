@@ -1,9 +1,9 @@
 // main files
-import 'package:ecommerce/widgets/services/database/database.dart';
-import 'package:ecommerce/widgets/services/shared_preferences.dart';
+import 'package:ecommerce/services/database/database.dart';
+import 'package:ecommerce/services/shared_preferences.dart';
 import 'package:ecommerce/widgets/utilities/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/widgets/services/auth/auth_services.dart';
+import 'package:ecommerce/services/auth/auth_services.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
@@ -34,6 +34,7 @@ class _LoginState extends State<Login> {
 
   bool isLoading = false;
   bool isLoadingGoogle = false;
+  bool isLoadingFacebook = false;
 
   // disposing the texteditingcontroller
   @override
@@ -157,10 +158,15 @@ class _LoginState extends State<Login> {
                           ),
                     SizedBox(width: 25),
                     // apple button
-                    SquareTile(
-                      imagePath: 'assets/images/apple.png',
-                      onTap: () {},
-                    )
+                    isLoadingFacebook
+                        ? SpinKitWave(
+                            color: style.color1,
+                            duration: Duration(seconds: 5),
+                          )
+                        : SquareTile(
+                            imagePath: "assets/images/facebook.png",
+                            onTap: _facebookSignIn,
+                          ),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -226,6 +232,48 @@ class _LoginState extends State<Login> {
   //     isLoadingGoogle = false;
   //   });
   // }
+
+  void _facebookSignIn() async {
+    setState(() {
+      isLoadingFacebook = true;
+    });
+
+    // perform Facebook sign-in
+    final userCredential = await auth.loginWithFacebook();
+
+    // User signed in successfully with Facebook
+    if (userCredential != null) {
+      // Extract user information
+      String userName = userCredential.user!.displayName ?? "";
+      String email = userCredential.user!.email ?? "";
+      String userImage = userCredential.user!.photoURL ?? "";
+
+      // Create user info map
+      Map<String, dynamic> userInfo = {
+        "Type": "Facebook",
+        "UserName": userName,
+        "Email": email,
+        "UserImage": userImage,
+      };
+
+      // Add user information to Firestore
+      await databaseMethods.addUserDetails(userInfo, userCredential.user!.uid);
+
+      // Update state
+      setState(() {
+        isLoadingFacebook = false;
+      });
+    } else {
+      // Failed to sign in with Facebook
+      setState(() {
+        isLoadingGoogle = false;
+      });
+      supportingWidgets.alertSnackBar(
+        context,
+        "Failed to sign in with Facebook",
+      );
+    }
+  }
 
   void _googleSignIn() async {
     setState(() {
