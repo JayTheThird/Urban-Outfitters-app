@@ -1,7 +1,7 @@
 // main files
-import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,41 +16,29 @@ void main() async {
   WidgetsBinding wb = WidgetsFlutterBinding.ensureInitialized();
 
   // firebase
-  Platform.isAndroid
-      ? {
-          await Firebase.initializeApp(
-            options: FirebaseOptions(
-              apiKey: "AIzaSyDuNbRcNw1BtGKL9EWD1nMqT7JF6jxEqRc",
-              appId: "1:454992340893:android:3b1e04c33a23379a22f174",
-              messagingSenderId: "454992340893",
-              projectId: "urban-outfitter",
-            ),
+  kIsWasm
+      ? await Firebase.initializeApp(
+          options: FirebaseOptions(
+            apiKey: "AIzaSyC0NAIt0LOZieFZ2Fx-Q34R_WpxNhzdX0c",
+            authDomain: "urban-outfitter.firebaseapp.com",
+            projectId: "urban-outfitter",
+            storageBucket: "urban-outfitter.appspot.com",
+            messagingSenderId: "454992340893",
+            appId: "1:454992340893:web:c7cab175e8f2693022f174",
           ),
-          // for native splash
-          FlutterNativeSplash.preserve(widgetsBinding: wb),
-          await Future.delayed(Duration(seconds: 1)),
-          FlutterNativeSplash.remove(),
-        }
-      : {
-          await Firebase.initializeApp(),
-          // for native splash
-          FlutterNativeSplash.preserve(widgetsBinding: wb),
-          await Future.delayed(Duration(seconds: 1)),
-          FlutterNativeSplash.remove(),
-        };
-
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: FirebaseOptions(
-        apiKey: "AIzaSyC0NAIt0LOZieFZ2Fx-Q34R_WpxNhzdX0c",
-        authDomain: "urban-outfitter.firebaseapp.com",
-        projectId: "urban-outfitter",
-        storageBucket: "urban-outfitter.appspot.com",
-        messagingSenderId: "454992340893",
-        appId: "1:454992340893:web:c7cab175e8f2693022f174",
-      ),
-    );
-  }
+        )
+      : await Firebase.initializeApp(
+          options: FirebaseOptions(
+            apiKey: "AIzaSyDuNbRcNw1BtGKL9EWD1nMqT7JF6jxEqRc",
+            appId: "1:454992340893:android:3b1e04c33a23379a22f174",
+            messagingSenderId: "454992340893",
+            projectId: "urban-outfitter",
+          ),
+        );
+  // for native splash
+  FlutterNativeSplash.preserve(widgetsBinding: wb);
+  await Future.delayed(Duration(seconds: 1));
+  FlutterNativeSplash.remove();
 
   runApp(
     const App(),
