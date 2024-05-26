@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,7 +57,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
-        print("Orientation $orientation");
+        if (kDebugMode) {
+          print("Orientation $orientation");
+        }
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: theme,

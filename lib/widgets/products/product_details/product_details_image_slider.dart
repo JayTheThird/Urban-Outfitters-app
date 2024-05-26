@@ -25,28 +25,31 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
       children: [
         Stack(
           children: [
-            CarouselSlider(
-              items: widget.products.productImage
-                  .map(
-                    (item) => Image.asset(
-                      item["image_Path"],
-                      width: double.infinity,
-                      height: 400,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                  .toList(),
-              carouselController: carouselController,
-              options: CarouselOptions(
-                scrollPhysics: const BouncingScrollPhysics(),
-                autoPlay: true,
-                aspectRatio: 1, // to increase and decrease height
-                viewportFraction: 1,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
+            Hero(
+              tag: widget.products.id,
+              child: CarouselSlider(
+                items: widget.products.productImage
+                    .map(
+                      (item) => Image.asset(
+                        item["image_Path"],
+                        width: double.infinity,
+                        height: 400,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                    .toList(),
+                carouselController: carouselController,
+                options: CarouselOptions(
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  autoPlay: true,
+                  aspectRatio: 1, // to increase and decrease height
+                  viewportFraction: 1,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                ),
               ),
             ),
           ],
