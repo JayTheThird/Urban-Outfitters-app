@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/screens/user_login.dart';
+import 'package:ecommerce/screens/users/user_login.dart';
 import 'package:ecommerce/widgets/utilities/user_textfield.dart';
 
 class ForgotPassword extends StatefulWidget {

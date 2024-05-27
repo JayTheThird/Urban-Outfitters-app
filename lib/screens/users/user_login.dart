@@ -7,11 +7,11 @@ import 'package:ecommerce/services/auth/auth_services.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/screens/user_registration.dart';
+import 'package:ecommerce/screens/users/user_registration.dart';
 import 'package:ecommerce/widgets/utilities/user_textfield.dart';
 import 'package:ecommerce/widgets/utilities/app_logo_square_tile.dart';
-import 'package:ecommerce/screens/user_forgot_password.dart';
-import 'package:ecommerce/screens/persistent_nav_bar.dart';
+import 'package:ecommerce/screens/users/user_forgot_password.dart';
+import 'package:ecommerce/screens/users/persistent_nav_bar.dart';
 import 'package:ecommerce/widgets/utilities/support_widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -310,6 +310,7 @@ class _LoginState extends State<Login> {
       setState(() {
         isLoadingGoogle = false;
       });
+      // ignore: use_build_context_synchronously
       supportingWidgets.alertSnackBar(context, "Failed to sign in with Google");
     }
   }

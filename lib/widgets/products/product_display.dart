@@ -1,5 +1,5 @@
 // main files
-import 'package:ecommerce/screens/product_details.dart';
+import 'package:ecommerce/screens/users/product_details.dart';
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/models/products.dart';

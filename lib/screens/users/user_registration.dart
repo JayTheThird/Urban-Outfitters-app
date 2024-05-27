@@ -1,5 +1,5 @@
 // main files
-import 'package:ecommerce/screens/persistent_nav_bar.dart';
+import 'package:ecommerce/screens/users/persistent_nav_bar.dart';
 import 'package:ecommerce/services/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,7 +7,7 @@ import 'package:random_string/random_string.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/screens/user_login.dart';
+import 'package:ecommerce/screens/users/user_login.dart';
 import 'package:ecommerce/widgets/utilities/user_textfield.dart';
 import 'package:ecommerce/services/database/database.dart';
 import 'package:ecommerce/services/auth/auth_services.dart';

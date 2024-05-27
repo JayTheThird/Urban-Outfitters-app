@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // Product Files
 import 'package:ecommerce/data/dummy_data.dart';
 import 'package:ecommerce/models/products.dart';
-import 'package:ecommerce/screens/product_details.dart';
+import 'package:ecommerce/screens/users/product_details.dart';
 import 'package:ecommerce/widgets/products/see_all_product_tile.dart';
 
 class SeeAllProducts extends StatelessWidget {

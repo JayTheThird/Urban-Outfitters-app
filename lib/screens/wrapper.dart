@@ -4,8 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // project files
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/screens/persistent_nav_bar.dart';
-import 'package:ecommerce/screens/user_login.dart';
+import 'package:ecommerce/screens/users/persistent_nav_bar.dart';
+import 'package:ecommerce/screens/users/user_login.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});

@@ -10,7 +10,7 @@ import 'package:ecommerce/widgets/utilities/main_header.dart';
 import 'package:ecommerce/widgets/products/product_display.dart';
 import 'package:ecommerce/widgets/utilities/title_tile.dart';
 import 'package:ecommerce/widgets/category/all_category.dart';
-import 'package:ecommerce/screens/all_products.dart';
+import 'package:ecommerce/screens/users/all_products.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
