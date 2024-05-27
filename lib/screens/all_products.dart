@@ -23,15 +23,13 @@ class SeeAllProducts extends StatelessWidget {
     // Calculate aspect ratio for grid items
     double calculateAspectRatio(BuildContext context) {
       // Total width available for two grid items
-      double availableWidth =
-          MediaQuery.of(context).size.width - 20; // 10 padding on each side
+      double availableWidth = MediaQuery.of(context).size.width - 20; // 10 padding on each side
 
       // Width of one grid item
-      double singleItemWidth =
-          (availableWidth - 4) / 2; // 2 crossAxisSpacing between items
+      double singleItemWidth = (availableWidth - 4) / 2; // 2 crossAxisSpacing between items
 
       // Height of one grid item
-      double singleItemHeight = 370;
+      double singleItemHeight = 335;
 
       // Calculate aspect ratio
       return singleItemWidth / singleItemHeight;
@@ -47,6 +45,7 @@ class SeeAllProducts extends StatelessWidget {
         itemCount: dummyProducts.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
+          mainAxisSpacing: 10,
           childAspectRatio: calculateAspectRatio(context),
         ),
         itemBuilder: (context, index) {

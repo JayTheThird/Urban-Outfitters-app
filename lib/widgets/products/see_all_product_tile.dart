@@ -27,7 +27,7 @@ class _ProductTileState extends State<SeeAllProductTile> {
         widget.onSelectProducts(widget.products);
       },
       child: Container(
-        width: 210,
+        width: 200,
         padding: EdgeInsets.all(4),
         // decoration: BoxDecoration(
         //   border: Border.all(
@@ -43,7 +43,7 @@ class _ProductTileState extends State<SeeAllProductTile> {
             // product main image
             Container(
               height: 200,
-              width: 200,
+              width: 190,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -57,7 +57,7 @@ class _ProductTileState extends State<SeeAllProductTile> {
                 ),
               ),
             ),
-            style.customSpacing(height: 8.0),
+            style.customSpacing(height: 15.0),
             // product title
             Text(
               widget.products.productName,
@@ -70,7 +70,7 @@ class _ProductTileState extends State<SeeAllProductTile> {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            style.customSpacing(height: 6.0),
+            style.customSpacing(height: 10.0),
             // product available size
             Row(
               // crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,7 +96,7 @@ class _ProductTileState extends State<SeeAllProductTile> {
                   ),
               ],
             ),
-            style.customSpacing(height: 6.0),
+            style.customSpacing(height: 10.0),
             // product price
             Text(
               '${widget.products.productPrice} Rs',

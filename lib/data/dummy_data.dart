@@ -58,8 +58,7 @@ final dummyProducts = [
     productSize: ["M", "L"],
     productPrice: 999,
     productFabric: "Cotton",
-    productDetails:
-        "A Double pocket Casual Shirt made with Cotton material, Best To wear in All Seasons.",
+    productDetails: "A Double pocket Casual Shirt made with Cotton material, Best To wear in All Seasons.",
   ),
 ];
 

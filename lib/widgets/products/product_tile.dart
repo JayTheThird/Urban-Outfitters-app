@@ -1,5 +1,6 @@
 // main files
 import 'package:flutter/material.dart';
+
 // project files
 import 'package:ecommerce/models/products.dart';
 import 'package:ecommerce/main.dart';
@@ -27,12 +28,12 @@ class _ProductTileState extends State<ProductTile> {
         widget.onSelectProducts(widget.products);
       },
       child: Container(
-        width: 210,
-        padding: EdgeInsets.all(4),
+        width: 200,
+        padding: EdgeInsets.all(6),
         // decoration: BoxDecoration(
         //   border: Border.all(
         //     color: style.color1,
-        //     width: 0.8,
+        //     // width: 0.8,
         //   ),
         //   borderRadius: BorderRadius.circular(10),
         // ),
@@ -43,7 +44,7 @@ class _ProductTileState extends State<ProductTile> {
             // product main image
             Container(
               height: 200,
-              width: 200,
+              width: 190,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -57,7 +58,7 @@ class _ProductTileState extends State<ProductTile> {
                 ),
               ),
             ),
-            style.customSpacing(height: 8.0),
+            style.customSpacing(height: 15.0),
             // product title
             Text(
               widget.products.productName,
@@ -70,7 +71,7 @@ class _ProductTileState extends State<ProductTile> {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            style.customSpacing(height: 6.0),
+            style.customSpacing(height: 10.0),
             // product available size
             Row(
               // crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,7 +97,7 @@ class _ProductTileState extends State<ProductTile> {
                   ),
               ],
             ),
-            style.customSpacing(height: 6.0),
+            style.customSpacing(height: 10.0),
             // product price
             Text(
               '${widget.products.productPrice} Rs',
