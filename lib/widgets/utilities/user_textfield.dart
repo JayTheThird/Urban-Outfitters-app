@@ -3,26 +3,29 @@ import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/main.dart';
 
+// ignore: must_be_immutable
 class MyTextField extends StatelessWidget {
-  const MyTextField({
+   MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
     required this.keyboardType,
+    this.maxLines,
   });
 
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
   final TextInputType keyboardType;
+  int? maxLines;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
-        
+        maxLines: maxLines,
         keyboardType: keyboardType,
         controller: controller,
         obscureText: obscureText,
@@ -56,5 +59,3 @@ class MyTextField extends StatelessWidget {
     );
   }
 }
-
-

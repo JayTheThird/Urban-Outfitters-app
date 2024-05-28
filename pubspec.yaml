@@ -55,6 +55,8 @@ dependencies:
   flutter_facebook_auth: ^6.2.0
   animated_icon: ^0.0.9
   loader_overlay: ^4.0.0
+  multi_dropdown: ^2.1.4
+  image_picker: ^1.1.1
 
 
 dev_dependencies:

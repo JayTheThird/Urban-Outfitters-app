@@ -1,5 +1,5 @@
 // main files
-import 'package:ecommerce/widgets/Slider/image_slider.dart';
+import 'package:ecommerce/widgets/utilities/image_slider.dart';
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/main.dart';

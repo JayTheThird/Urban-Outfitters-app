@@ -12,7 +12,7 @@ import 'package:ecommerce/widgets/utilities/user_textfield.dart';
 import 'package:ecommerce/services/database/database.dart';
 import 'package:ecommerce/services/auth/auth_services.dart';
 import 'package:ecommerce/widgets/utilities/support_widgets.dart';
-import 'package:ecommerce/widgets/utilities/buttons.dart';
+import 'package:ecommerce/widgets/utilities/login_signup-button.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});

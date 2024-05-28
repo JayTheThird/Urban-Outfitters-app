@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //  project file
 import 'package:ecommerce/services/auth/auth_services.dart';
-import 'package:ecommerce/widgets/utilities/buttons.dart';
+import 'package:ecommerce/widgets/utilities/login_signup-button.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});

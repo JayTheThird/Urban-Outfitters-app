@@ -1,32 +1,41 @@
-import 'package:ecommerce/main.dart';
+//  Main Files
 import 'package:flutter/material.dart';
+// Project files
+import 'package:ecommerce/main.dart';
 
 // ignore: must_be_immutable
-class LoginSignUpButtons extends StatelessWidget {
-  LoginSignUpButtons({super.key, required this.onTap, required this.message});
+class MainButton1 extends StatelessWidget {
+  MainButton1({
+    super.key,
+    required this.title,
+    required this.colorBG,
+    required this.onTap,
+    this.width,
+  });
 
-  void Function() onTap;
-  String message;
+  final String title;
+  final Color colorBG;
+  double? width;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(
-          color: style.color2,
-          borderRadius: BorderRadius.circular(10),
+    return SizedBox(
+      width: width,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor: colorBG,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
-        child: Center(
-          child: Text(
-            message,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+        onPressed: onTap,
+        child: Text(
+          title,
+          style: style.mainTitle.copyWith(
+            fontSize: 16,
+            letterSpacing: 2,
+            color: Colors.white,
           ),
         ),
       ),
