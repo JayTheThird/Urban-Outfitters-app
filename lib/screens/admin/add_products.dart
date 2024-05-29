@@ -1,9 +1,10 @@
 //  main files
 import 'dart:io';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 
 //  Project files
 import 'package:ecommerce/main.dart';
@@ -11,6 +12,7 @@ import 'package:ecommerce/widgets/utilities/add_image_to_products_admin.dart';
 import 'package:ecommerce/widgets/utilities/buttons.dart';
 import 'package:ecommerce/widgets/utilities/single_multi_dropdown.dart';
 import 'package:ecommerce/widgets/utilities/user_textfield.dart';
+import 'package:random_string/random_string.dart';
 
 class AddProducts extends StatefulWidget {
   const AddProducts({super.key});
@@ -56,7 +58,7 @@ class _AddProductsState extends State<AddProducts> {
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             style.customSpacing(height: 15.0),
             // product name
@@ -91,11 +93,11 @@ class _AddProductsState extends State<AddProducts> {
             ),
             style.customSpacing(height: 15.0),
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: MainButton1(
                 title: "Add",
                 colorBG: style.color1,
-                onTap: () {},
+                onTap: _addProducts,
                 width: 340,
               ),
             ),
@@ -127,6 +129,41 @@ class _AddProductsState extends State<AddProducts> {
       setState(() {
         onFilePicked(File(pickedImage.path));
       });
+    }
+  }
+
+  // add products
+  void _addProducts() async {
+    final productId = randomAlphaNumeric(10);
+
+    // Ensure images are selected
+    if (_selectedProductImage1 == null ||
+        _selectedProductImage2 == null ||
+        _selectedProductImage3 == null ||
+        _selectedProductImage4 == null) {
+      log('Please select all four images');
+      return;
+    }
+
+    final storageRef = FirebaseStorage.instance.ref().child("Product images/$productId");
+
+    // Upload images
+    final UploadTask imageTask1 = storageRef.child("image1.jpg").putFile(_selectedProductImage1!);
+    final UploadTask imageTask2 = storageRef.child("image2.jpg").putFile(_selectedProductImage2!);
+    final UploadTask imageTask3 = storageRef.child("image3.jpg").putFile(_selectedProductImage3!);
+    final UploadTask imageTask4 = storageRef.child("image4.jpg").putFile(_selectedProductImage4!);
+
+    // Wait for all uploads to complete and get download URLs
+    final List<String> imageUrls = await Future.wait([
+      imageTask1.then((taskSnapshot) => taskSnapshot.ref.getDownloadURL()),
+      imageTask2.then((taskSnapshot) => taskSnapshot.ref.getDownloadURL()),
+      imageTask3.then((taskSnapshot) => taskSnapshot.ref.getDownloadURL()),
+      imageTask4.then((taskSnapshot) => taskSnapshot.ref.getDownloadURL()),
+    ]);
+
+    // Log image URLs
+    for (var imageUrl in imageUrls) {
+      log(imageUrl);
     }
   }
 }

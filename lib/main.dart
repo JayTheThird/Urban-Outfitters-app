@@ -1,5 +1,4 @@
 // main files
-import 'package:ecommerce/screens/admin/admin_home.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +7,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // project files
-
+import 'package:ecommerce/screens/admin/admin_home.dart';
 import 'package:ecommerce/widgets/utilities/support_styling_widget.dart';
 
 // created style object of SupportStylingClass
@@ -21,7 +20,7 @@ void main() async {
   kIsWasm
       ? await Firebase.initializeApp(
           options: FirebaseOptions(
-            apiKey: "AIzaSyC0NAIt0LOZieFZ2Fx-Q34R_WpxNhzdX0c",
+            apiKey: 'AIzaSyC0NAIt0LOZieFZ2Fx-Q34R_WpxNhzdX0c',
             authDomain: "urban-outfitter.firebaseapp.com",
             projectId: "urban-outfitter",
             storageBucket: "urban-outfitter.appspot.com",
@@ -35,6 +34,7 @@ void main() async {
             appId: "1:454992340893:android:3b1e04c33a23379a22f174",
             messagingSenderId: "454992340893",
             projectId: "urban-outfitter",
+            storageBucket: "urban-outfitter.appspot.com",  
           ),
         );
   // for native splash
