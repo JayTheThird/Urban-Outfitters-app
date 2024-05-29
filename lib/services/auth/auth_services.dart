@@ -41,7 +41,7 @@ class AuthServices {
 
       // Create a credential from the access token
       final cred = FacebookAuthProvider.credential(
-        facebookAuth.accessToken!.token,
+        facebookAuth.accessToken!.tokenString,
       );
 
       return await _auth.signInWithCredential(cred);

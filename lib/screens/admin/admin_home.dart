@@ -1,5 +1,7 @@
 //  Main Files
+import 'package:ecommerce/widgets/utilities/title_list_tiles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 // Project Files
@@ -14,6 +16,8 @@ class AdminHome extends StatefulWidget {
 }
 
 class _AdminHomeState extends State<AdminHome> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,35 +76,31 @@ class _AdminHomeState extends State<AdminHome> {
             ),
             style.customSpacing(height: 15.0),
             //
-            ListTile(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Colors.white,
-                  width: .07,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              title: Text(
-                "Add Product's",
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.9),
-                  letterSpacing: 1.5,
-                  fontSize: 18,
-                ),
-              ),
-              trailing: GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) => AddProducts(),
+            isLoading
+                ? SpinKitWave(
+                    color: Colors.white,
+                  )
+                : TitleListTiles(
+                    onTapNavigate: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await Future.delayed(
+                        const Duration(seconds: 2),
+                        // add products
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => AddProducts(),
+                          ),
+                        ),
+                      );
+                      setState(() {
+                        isLoading = false;
+                      });
+                    },
+                    color: Colors.white,
+                    title: "Add Product",
                   ),
-                ),
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-            )
           ],
         ),
       ),

@@ -12,6 +12,7 @@ class MultiDropdown extends StatefulWidget {
     this.maxItems,
     required this.selectionType,
     required this.labelColor,
+    required this.onOptionSelected,
   });
 
   final String hint;
@@ -20,6 +21,7 @@ class MultiDropdown extends StatefulWidget {
   int? maxItems;
   final SelectionType selectionType;
   final Color labelColor;
+  void Function(List<ValueItem<dynamic>>) onOptionSelected;
 
   @override
   State<MultiDropdown> createState() => _MultiDropdownState();
@@ -34,7 +36,8 @@ class _MultiDropdownState extends State<MultiDropdown> {
         hint: widget.hint,
         controller: widget.controller,
         onOptionSelected: (options) {
-          debugPrint(options.toString());
+          // debugPrint(options.toString());
+          widget.onOptionSelected(options);
         },
         options: widget.options,
         maxItems: widget.maxItems,

@@ -1,8 +1,11 @@
 //  main files
 import 'dart:io';
-import 'dart:developer';
+import 'package:ecommerce/services/database/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -22,6 +25,13 @@ class AddProducts extends StatefulWidget {
 }
 
 class _AddProductsState extends State<AddProducts> {
+  //
+  final db = Database();
+
+  // when user submit form that time display date
+  var now = DateTime.now();
+  var formatter = DateFormat('yyyy-MM-dd / HH:mm:ss'); //date and time format
+
   // text editing controllers
   final _productNameController = TextEditingController();
   final _productPriceController = TextEditingController();
@@ -42,6 +52,8 @@ class _AddProductsState extends State<AddProducts> {
   File? _selectedProductImage3;
   File? _selectedProductImage4;
 
+  List<ValueItem> selectedSize = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,69 +66,129 @@ class _AddProductsState extends State<AddProducts> {
             color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new_outlined,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            style.customSpacing(height: 15.0),
-            // product name
-            _buildTextField("Product Name", _productNameController),
-            style.customSpacing(height: 15.0),
-            // product price
-            _buildTextField("Product Price", _productPriceController),
-            style.customSpacing(height: 15.0),
-            // product size dropdown
-            MultiDropdown(
-              hint: "Product Size",
-              controller: _productSizeController,
-              options: _options,
-              selectionType: SelectionType.multi,
-              labelColor: Colors.white,
-              maxItems: 3,
-            ),
-            style.customSpacing(height: 15.0),
-            // product description
-            _buildTextField("Product Description", _productDescriptionController, maxLines: 5),
-            style.customSpacing(height: 15.0),
-            // product images
-            AddProductImageAdmin(
-              productImage1: _selectedProductImage1,
-              addProductImage1: () => _pickImage((file) => _selectedProductImage1 = file),
-              productImage2: _selectedProductImage2,
-              addProductImage2: () => _pickImage((file) => _selectedProductImage2 = file),
-              productImage3: _selectedProductImage3,
-              addProductImage3: () => _pickImage((file) => _selectedProductImage3 = file),
-              productImage4: _selectedProductImage4,
-              addProductImage4: () => _pickImage((file) => _selectedProductImage4 = file),
-            ),
-            style.customSpacing(height: 15.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: MainButton1(
-                title: "Add",
-                colorBG: style.color1,
-                onTap: _addProducts,
-                width: 340,
+      body: LoaderOverlay(
+        child: SingleChildScrollView(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              style.customSpacing(height: 15.0),
+              // product name
+              _buildTextField(
+                "Product Name",
+                _productNameController,
+                TextInputType.name,
               ),
-            ),
-            SizedBox(height: 50.0),
-          ],
+              style.customSpacing(height: 15.0),
+              // product price
+              _buildTextField(
+                "Product Price",
+                _productPriceController,
+                TextInputType.number,
+              ),
+              style.customSpacing(height: 15.0),
+              // product size dropdown
+              MultiDropdown(
+                hint: "Product Size",
+                controller: _productSizeController,
+                options: _options,
+                selectionType: SelectionType.multi,
+                labelColor: Colors.white,
+                maxItems: 3,
+                onOptionSelected: (selectedOption) {
+                  setState(() {
+                    // when admin select size it will add in [selectedSize]
+                    selectedSize = selectedOption.toList();
+                  });
+                  debugPrint("SELECTED SIZE $selectedSize");
+                },
+              ),
+
+              style.customSpacing(height: 15.0),
+              // product description
+              _buildTextField(
+                "Product Description",
+                _productDescriptionController,
+                TextInputType.name,
+                maxLines: 5,
+              ),
+              style.customSpacing(height: 15.0),
+              // product images
+              AddProductImageAdmin(
+                productImage1: _selectedProductImage1,
+                addProductImage1: () => _pickImage((file) => _selectedProductImage1 = file),
+                productImage2: _selectedProductImage2,
+                addProductImage2: () => _pickImage((file) => _selectedProductImage2 = file),
+                productImage3: _selectedProductImage3,
+                addProductImage3: () => _pickImage((file) => _selectedProductImage3 = file),
+                productImage4: _selectedProductImage4,
+                addProductImage4: () => _pickImage((file) => _selectedProductImage4 = file),
+              ),
+              style.customSpacing(height: 15.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: MainButton1(
+                  title: "Add",
+                  colorBG: style.color1,
+                  onTap: _onTapShowOverlay,
+                  width: 340,
+                ),
+              ),
+              SizedBox(height: 50.0),
+            ],
+          ),
         ),
       ),
     );
   }
 
   // body for textfield
-  Widget _buildTextField(String hintText, TextEditingController controller, {int? maxLines}) {
+  Widget _buildTextField(
+    String hintText,
+    TextEditingController controller,
+    TextInputType typeOfKeyboard, {
+    int? maxLines,
+  }) {
     return MyTextField(
       controller: controller,
       obscureText: false,
       hintText: hintText,
-      keyboardType: TextInputType.text,
+      keyboardType: typeOfKeyboard,
       maxLines: maxLines,
     );
+  }
+
+  void _onTapShowOverlay() async {
+    // when admin press button then it will display
+    context.loaderOverlay.show(
+      widgetBuilder: (_) {
+        return Center(
+          child: SpinKitWave(
+            color: style.color1,
+            size: 60,
+          ),
+        );
+      },
+    );
+
+    await Future.delayed(
+      const Duration(seconds: 3),
+      // add products
+      () => _addProducts(),
+    );
+    // Whether this State object is currently in a tree.
+    if (!mounted) return;
+    context.loaderOverlay.hide();
   }
 
   // for pick image
@@ -134,17 +206,13 @@ class _AddProductsState extends State<AddProducts> {
 
   // add products
   void _addProducts() async {
+    // unique 10 digit string, work as id for product and image
     final productId = randomAlphaNumeric(10);
 
-    // Ensure images are selected
-    if (_selectedProductImage1 == null ||
-        _selectedProductImage2 == null ||
-        _selectedProductImage3 == null ||
-        _selectedProductImage4 == null) {
-      log('Please select all four images');
-      return;
-    }
+    // to show current date
+    String currentDate = formatter.format(now);
 
+    // create reference for storage to access
     final storageRef = FirebaseStorage.instance.ref().child("Product images/$productId");
 
     // Upload images
@@ -161,9 +229,47 @@ class _AddProductsState extends State<AddProducts> {
       imageTask4.then((taskSnapshot) => taskSnapshot.ref.getDownloadURL()),
     ]);
 
-    // Log image URLs
-    for (var imageUrl in imageUrls) {
-      log(imageUrl);
-    }
+    // then it will convert to list of string
+    List<String> selectedProductSize = selectedSize
+        .map(
+          (item) => item.label,
+        )
+        .toList();
+
+    // adding data
+    Map<String, dynamic> productDetails = {
+      "Date-Time": currentDate,
+      "Product-Id": productId,
+      "Image-Id": productId,
+      "Product-Name": _productNameController.text,
+      "Product-Price": _productPriceController.text,
+      "Product-Description": _productDescriptionController.text,
+      "Product-Size": selectedProductSize,
+      "Images": {
+        "image-1": imageUrls[0],
+        "image-2": imageUrls[1],
+        "image-3": imageUrls[2],
+        "image-4": imageUrls[3],
+      },
+    };
+
+    // addProduct
+    db.addProducts(productDetails, productId);
+
+    // when data is send successfully then this function clear form and images
+    _clearForm();
+  }
+
+  void _clearForm() {
+    _productNameController.clear();
+    _productPriceController.clear();
+    _productDescriptionController.clear();
+    _productSizeController.clearAllSelection();
+    setState(() {
+      _selectedProductImage1 = null;
+      _selectedProductImage2 = null;
+      _selectedProductImage3 = null;
+      _selectedProductImage4 = null;
+    });
   }
 }

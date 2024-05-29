@@ -9,4 +9,9 @@ class Database {
   Future addUserDetails(Map<String, dynamic> userInfo, String id) async {
     return await db.collection("users").doc(id).set(userInfo);
   }
+
+  // add products form admin side
+  Future addProducts(Map<String, dynamic> productDetails, String id) async {
+    return await db.collection("products").doc(id).set(productDetails);
+  }
 }
