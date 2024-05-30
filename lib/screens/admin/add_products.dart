@@ -1,5 +1,6 @@
 //  main files
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/services/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -28,7 +29,7 @@ class _AddProductsState extends State<AddProducts> {
   //
   final db = Database();
 
-  // when user submit form that time display date
+  // when admin submit form that time display date
   var now = DateTime.now();
   var formatter = DateFormat('yyyy-MM-dd / HH:mm:ss'); //date and time format
 
@@ -37,6 +38,7 @@ class _AddProductsState extends State<AddProducts> {
   final _productPriceController = TextEditingController();
   final _productDescriptionController = TextEditingController();
   final _productSizeController = MultiSelectController();
+  final _productCategoryController = MultiSelectController();
 
   // list for product size
   final List<ValueItem> _options = [
@@ -52,7 +54,40 @@ class _AddProductsState extends State<AddProducts> {
   File? _selectedProductImage3;
   File? _selectedProductImage4;
 
+  //dropdown lists
   List<ValueItem> selectedSize = [];
+  List<ValueItem> selectedCategories = [];
+  List<ValueItem> _dropdownFetchedItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+    debugPrint("FETCHED DATA $_dropdownFetchedItems");
+  }
+
+  // to fetch data from categories
+  Future<void> fetchData() async {
+    // Get a reference to the Firestore collection 'categories'
+    CollectionReference collectionRef = FirebaseFirestore.instance.collection('categories');
+
+    //Fetch all documents in the 'categories' collection
+    QuerySnapshot querySnapshot = await collectionRef.get();
+
+    //Map each document in the QuerySnapshot to a ValueItem object
+    List<ValueItem> fetchedOptions = querySnapshot.docs.map((doc) {
+      return ValueItem(
+        label: doc['Category-Name'] as String, 
+        value: doc['Category-Id'] as String, 
+      );
+    }).toList();
+
+    
+    setState(() {
+      _dropdownFetchedItems = fetchedOptions;
+    });
+    debugPrint("FETCHED DATA $_dropdownFetchedItems");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +148,30 @@ class _AddProductsState extends State<AddProducts> {
                   debugPrint("SELECTED SIZE $selectedSize");
                 },
               ),
-
+              style.customSpacing(height: 15.0),
+              // product category
+              _dropdownFetchedItems.isNotEmpty
+                  ? MultiDropdown(
+                      hint: "Product Category",
+                      controller: _productCategoryController,
+                      options: _dropdownFetchedItems,
+                      selectionType: SelectionType.multi,
+                      labelColor: Colors.white,
+                      maxItems: 3,
+                      onOptionSelected: (selectedOption) {
+                        setState(() {
+                          // when admin select categories it will add in [selectedCategories]
+                          selectedCategories = selectedOption.toList();
+                        });
+                        debugPrint("SELECTED CATEGORIES $selectedCategories");
+                      },
+                    )
+                  : Center(
+                      child: SpinKitWave(
+                        color: style.color1,
+                        size: 60,
+                      ),
+                    ),
               style.customSpacing(height: 15.0),
               // product description
               _buildTextField(
@@ -236,6 +294,11 @@ class _AddProductsState extends State<AddProducts> {
         )
         .toList();
 
+    //  converting [selectedCategories] to {selectedProductCategory}
+    Map<String, String> selectedProductCategory = {
+      for (var item in selectedCategories) item.value: item.label,
+    };
+
     // adding data
     Map<String, dynamic> productDetails = {
       "Date-Time": currentDate,
@@ -245,6 +308,7 @@ class _AddProductsState extends State<AddProducts> {
       "Product-Price": _productPriceController.text,
       "Product-Description": _productDescriptionController.text,
       "Product-Size": selectedProductSize,
+      "Product-Category": selectedProductCategory,
       "Images": {
         "image-1": imageUrls[0],
         "image-2": imageUrls[1],
@@ -265,6 +329,7 @@ class _AddProductsState extends State<AddProducts> {
     _productPriceController.clear();
     _productDescriptionController.clear();
     _productSizeController.clearAllSelection();
+    _productCategoryController.clearAllSelection();
     setState(() {
       _selectedProductImage1 = null;
       _selectedProductImage2 = null;

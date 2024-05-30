@@ -1,15 +1,21 @@
+//  Main Files
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:random_string/random_string.dart';
 
+
+// Project Files
 import 'package:ecommerce/main.dart';
+import 'package:ecommerce/services/database/database.dart';
 import 'package:ecommerce/widgets/utilities/buttons.dart';
 import 'package:ecommerce/widgets/utilities/image_picker.dart';
 import 'package:ecommerce/widgets/utilities/single_multi_dropdown.dart';
 import 'package:ecommerce/widgets/utilities/user_textfield.dart';
-
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:loader_overlay/loader_overlay.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class AddCategories extends StatefulWidget {
   const AddCategories({super.key});
@@ -19,9 +25,16 @@ class AddCategories extends StatefulWidget {
 }
 
 class _AddCategoriesState extends State<AddCategories> {
+  // created object to access method of database
+  final db = Database();
+
   // text editing controllers
-  final _addNewCategory = TextEditingController();
+  final _categoryName = TextEditingController();
   final _categoryTypeController = MultiSelectController();
+
+  // when admin submit form that time display date
+  var now = DateTime.now();
+  var formatter = DateFormat('yyyy-MM-dd / HH:mm:ss'); //date and time format
 
   // list for category type
   final List<ValueItem> _options = [
@@ -30,6 +43,8 @@ class _AddCategoriesState extends State<AddCategories> {
   ];
 
   File? _selectedCategoryImage;
+
+  List<ValueItem> selectedCategoryType = [];
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +83,17 @@ class _AddCategoriesState extends State<AddCategories> {
                 selectionType: SelectionType.single,
                 selectedOptionTextColor: style.color1,
                 labelColor: Colors.white,
-                onOptionSelected: (selectedCategoryType) {},
+                onOptionSelected: (categoryType) {
+                  setState(() {
+                    selectedCategoryType = categoryType.toList();
+                  });
+                  debugPrint("SELECTED CATEGORY TYPE $selectedCategoryType");
+                },
               ),
               style.customSpacing(height: 15.0),
               // add new category
               MyTextField(
-                controller: _addNewCategory,
+                controller: _categoryName,
                 hintText: "Add New Category",
                 obscureText: false,
                 keyboardType: TextInputType.name,
@@ -121,7 +141,7 @@ class _AddCategoriesState extends State<AddCategories> {
                 child: MainButton1(
                   title: "Add Category",
                   colorBG: style.color1,
-                  onTap: () {},
+                  onTap: _onTapShowOverlay,
                   width: 340,
                 ),
               ),
@@ -145,5 +165,63 @@ class _AddCategoriesState extends State<AddCategories> {
         onFilePicked(File(pickedImage.path));
       });
     }
+  }
+
+  void _onTapShowOverlay() async {
+    // when admin press button then it will display
+    context.loaderOverlay.show(
+      widgetBuilder: (_) {
+        return Center(
+          child: SpinKitWave(
+            color: style.color1,
+            size: 60,
+          ),
+        );
+      },
+    );
+
+    await Future.delayed(
+      const Duration(seconds: 3),
+      // add products
+      () => _addCategories(),
+    );
+    // Whether this State object is currently in a tree.
+    if (!mounted) return;
+    context.loaderOverlay.hide();
+  }
+
+  void _addCategories() {
+    // created random id for category's
+    String categoryId = randomAlphaNumeric(10);
+
+    // to show current date
+    String currentDate = formatter.format(now);
+
+    // then it will convert to list of string
+    List<String> selectedTypeOfCategory = selectedCategoryType
+        .map(
+          (item) => item.label,
+        )
+        .toList();
+
+    Map<String, dynamic> categoryInfo = {
+      "Date-Time": currentDate,
+      "Category-Id": categoryId,
+      "Category-Type": selectedTypeOfCategory.single,
+      "Category-Name": _categoryName.text,
+      "Category-Image": _selectedCategoryImage!.path,
+    };
+
+    db.addCategory(categoryInfo, categoryId);
+
+    _clearForm();
+  }
+
+  void _clearForm() {
+    _categoryName.clear();
+    _categoryTypeController.clearAllSelection();
+    setState(() {
+      _selectedCategoryImage = null;
+    });
   }
 }
