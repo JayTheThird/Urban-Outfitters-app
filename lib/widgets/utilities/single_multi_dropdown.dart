@@ -13,6 +13,7 @@ class MultiDropdown extends StatefulWidget {
     required this.selectionType,
     required this.labelColor,
     required this.onOptionSelected,
+    this.selectedOptionTextColor,
   });
 
   final String hint;
@@ -22,6 +23,7 @@ class MultiDropdown extends StatefulWidget {
   final SelectionType selectionType;
   final Color labelColor;
   void Function(List<ValueItem<dynamic>>) onOptionSelected;
+  Color? selectedOptionTextColor;
 
   @override
   State<MultiDropdown> createState() => _MultiDropdownState();
@@ -67,6 +69,10 @@ class _MultiDropdownState extends State<MultiDropdown> {
           color: style.color2,
         ),
         borderColor: style.color1,
+        singleSelectItemStyle: TextStyle(
+          color: widget.selectedOptionTextColor,
+          fontSize: 18,
+        ),
         borderWidth: 1,
         borderRadius: 10,
       ),

@@ -9,10 +9,14 @@ class ProductImagesPicker extends StatefulWidget {
     super.key,
     required this.onTapGallery,
     this.selectedImage,
+    this.height,
+    this.width,
   });
 
   File? selectedImage;
   final void Function() onTapGallery;
+  double? height;
+  double? width;
 
   @override
   State<ProductImagesPicker> createState() => _ProductImagesPickerState();
@@ -43,6 +47,8 @@ class _ProductImagesPickerState extends State<ProductImagesPicker> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: widget.height,
+      width: widget.width,
       decoration: BoxDecoration(
         border: Border.all(
           color: style.color1,

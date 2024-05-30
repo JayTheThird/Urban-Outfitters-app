@@ -1,4 +1,5 @@
 //  Main Files
+import 'package:ecommerce/screens/admin/add_category.dart';
 import 'package:ecommerce/widgets/utilities/title_list_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -16,7 +17,8 @@ class AdminHome extends StatefulWidget {
 }
 
 class _AdminHomeState extends State<AdminHome> {
-  bool isLoading = false;
+  bool addProductIsLoading = false;
+  bool addCategoryIsLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,15 +77,13 @@ class _AdminHomeState extends State<AdminHome> {
               ),
             ),
             style.customSpacing(height: 15.0),
-            //
-            isLoading
-                ? SpinKitWave(
-                    color: Colors.white,
-                  )
+            // add product
+            addProductIsLoading
+                ? _buildLoadingIndicator()
                 : TitleListTiles(
                     onTapNavigate: () async {
                       setState(() {
-                        isLoading = true;
+                        addProductIsLoading = true;
                       });
                       await Future.delayed(
                         const Duration(seconds: 2),
@@ -95,15 +95,48 @@ class _AdminHomeState extends State<AdminHome> {
                         ),
                       );
                       setState(() {
-                        isLoading = false;
+                        addProductIsLoading = false;
                       });
                     },
                     color: Colors.white,
                     title: "Add Product",
                   ),
+            style.customSpacing(height: 15.0),
+
+            // add category
+            addCategoryIsLoading
+                ? _buildLoadingIndicator()
+                : TitleListTiles(
+                    onTapNavigate: () async {
+                      setState(() {
+                        addCategoryIsLoading = true;
+                      });
+                      await Future.delayed(
+                        const Duration(seconds: 2),
+                        // add products
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => AddCategories(),
+                          ),
+                        ),
+                      );
+                      setState(() {
+                        addCategoryIsLoading = false;
+                      });
+                    },
+                    color: Colors.white,
+                    title: "Add Category",
+                  ),
           ],
         ),
       ),
+    );
+  }
+
+  // loading indicator body
+  Widget _buildLoadingIndicator() {
+    return SpinKitWave(
+      color: Colors.white,
     );
   }
 }
