@@ -79,6 +79,7 @@ class _AddProductsState extends State<AddProducts> {
       return ValueItem(
         label: doc['Category-Name'] as String, 
         value: doc['Category-Id'] as String, 
+
       );
     }).toList();
 
@@ -318,7 +319,7 @@ class _AddProductsState extends State<AddProducts> {
     };
 
     // addProduct
-    db.addProducts(productDetails, productId);
+    await db.addProducts(productDetails, productId);
 
     // when data is send successfully then this function clear form and images
     _clearForm();

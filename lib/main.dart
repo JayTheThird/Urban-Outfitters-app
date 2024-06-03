@@ -1,4 +1,5 @@
 // main files
+import 'package:ecommerce/screens/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // project files
-import 'package:ecommerce/screens/admin/admin_home.dart';
 import 'package:ecommerce/widgets/utilities/support_styling_widget.dart';
 
 // created style object of SupportStylingClass
@@ -67,7 +67,7 @@ class App extends StatelessWidget {
           home: Scaffold(
             resizeToAvoidBottomInset: false,
             body: Center(
-              child: AdminHome(), // when the app start it goes to wrapper screen
+              child: Wrapper(), // when the app start it goes to wrapper screen
             ),
           ),
         );

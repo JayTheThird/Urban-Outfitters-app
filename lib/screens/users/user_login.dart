@@ -1,9 +1,7 @@
 // main files
-import 'package:ecommerce/services/database/database.dart';
-import 'package:ecommerce/services/shared_preferences.dart';
-import 'package:ecommerce/widgets/utilities/login_signup-button.dart';
+
 import 'package:flutter/material.dart';
-import 'package:ecommerce/services/auth/auth_services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
@@ -13,7 +11,11 @@ import 'package:ecommerce/widgets/utilities/app_logo_square_tile.dart';
 import 'package:ecommerce/screens/users/user_forgot_password.dart';
 import 'package:ecommerce/screens/users/persistent_nav_bar.dart';
 import 'package:ecommerce/widgets/utilities/support_widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ecommerce/screens/admin/admin_login.dart';
+import 'package:ecommerce/services/database/database.dart';
+import 'package:ecommerce/services/shared_preferences.dart';
+import 'package:ecommerce/widgets/utilities/login_signup-button.dart';
+import 'package:ecommerce/services/auth/auth_services.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -77,6 +79,7 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.text,
                   hintText: 'Password',
                   obscureText: true,
+                  maxLines: 1,
                 ),
                 SizedBox(height: 10),
                 // forgot password?
@@ -111,8 +114,11 @@ class _LoginState extends State<Login> {
                         color: style.color1,
                         duration: Duration(seconds: 5),
                       )
-                    : LoginSignUpButtons(onTap: _userLogin, message: "Log in"),
-
+                    : LoginSignUpButtons(
+                        onTap: _userLogin,
+                        message: "Log in",
+                        onLongPress: _adminLogin,
+                      ),
                 SizedBox(height: 30),
                 // or continue with
                 Padding(
@@ -213,26 +219,7 @@ class _LoginState extends State<Login> {
     passwordController.clear();
   }
 
-  // void _googleSignIn() async {
-  //   setState(() {
-  //     isLoadingGoogle = true;
-  //   });
-  //   await auth.loginWithGoogle();
-
-  //   // sending user info to firestore
-  //   Map<String, dynamic> userInfo = {
-  //     // "Id": id,
-  //     "UserName": userNameController.text.trim(),
-  //     "Email": auth.loginWithGoogle().,
-  //     "UserImage": "ecommerce/assets/images/user2.png",
-  //   };
-  //   // add data to users in firestore
-  //   await databaseMethods.addUserDetails(userInfo, id);
-  //   setState(() {
-  //     isLoadingGoogle = false;
-  //   });
-  // }
-
+  // Facebook sign in
   void _facebookSignIn() async {
     setState(() {
       isLoadingFacebook = true;
@@ -275,6 +262,7 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // google sign in
   void _googleSignIn() async {
     setState(() {
       isLoadingGoogle = true;
@@ -315,23 +303,53 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // admin sign in 1
+  void _adminLogin() async {
+    // Check if email is empty
+    supportingWidgets.textFieldCantBeEmpty(emailController, context, "Email can't be empty");
+
+    // Check if password is empty
+    supportingWidgets.textFieldCantBeEmpty(passwordController, context, "Password can't be empty");
+
+    setState(() {
+      isLoading = true;
+    });
+
+    // to navigate to admin side
+    if (emailController.text == "Admin123@gmail.com" && passwordController.text == "Admin@123") {
+      setState(() {
+        isLoading = false;
+      });
+      supportingWidgets.successSnackBar(context, "Redirecting to Admin side");
+      // delayed till 1 seconds
+      await Future.delayed(Duration(seconds: 1));
+      //Removes the current SnackBar.
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      // clear the text editing controller values
+      clearTextEditingController();
+      // navigating to tabs screen
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => AdminLogin(),
+        ),
+      );
+    }
+  }
+
   // sign user in method
   void _userLogin() async {
     // Check if email is empty
-    supportingWidgets.textFieldCantBeEmpty(
-        emailController, context, "Email can't be empty");
+    supportingWidgets.textFieldCantBeEmpty(emailController, context, "Email can't be empty");
 
     // Check if password is empty
-    supportingWidgets.textFieldCantBeEmpty(
-        passwordController, context, "Password can't be empty");
+    supportingWidgets.textFieldCantBeEmpty(passwordController, context, "Password can't be empty");
 
     // Check if email is valid
-    supportingWidgets.textFieldEmailValid(
-        emailController, context, "Invalid email formate");
+    supportingWidgets.textFieldEmailValid(emailController, context, "Invalid email formate");
 
     // Check if password meets minimum length requirement
-    supportingWidgets.passwordLength(passwordController, context,
-        "Password must be at least 6 characters long");
+    supportingWidgets.passwordLength(
+        passwordController, context, "Password must be at least 6 characters long");
 
     setState(() {
       isLoading = true;
@@ -342,6 +360,7 @@ class _LoginState extends State<Login> {
       passwordController.text.trim(),
       context,
     );
+
     if (user != null) {
       setState(() {
         isLoading = false;

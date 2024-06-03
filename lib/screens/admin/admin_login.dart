@@ -59,8 +59,9 @@ class _AdminLoginState extends State<AdminLogin> {
                     keyboardType: TextInputType.text,
                     hintText: 'Password',
                     obscureText: true,
+                    maxLines: 1,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 15),
                   // log in button
                   LoginSignUpButtons(
                     onTap: _onTapShowOverlay,
@@ -75,7 +76,7 @@ class _AdminLoginState extends State<AdminLogin> {
     );
   }
 
-  // overlay
+  // overlay Admin sign in 2
   void _onTapShowOverlay() {
     if (userNameController.text.isEmpty) {
       // Check if Username is empty

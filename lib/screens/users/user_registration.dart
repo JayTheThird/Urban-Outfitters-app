@@ -93,6 +93,7 @@ class _RegistrationState extends State<Registration> {
                   keyboardType: TextInputType.text,
                   hintText: 'Password',
                   obscureText: true,
+                  maxLines: 1,
                 ),
                 SizedBox(height: 12),
                 // Registration in button
@@ -193,32 +194,28 @@ class _RegistrationState extends State<Registration> {
   _userSignUp() async {
     String id = randomAlphaNumeric(10);
     // Check if username is empty
-    supportingWidgets.textFieldCantBeEmpty(
-        userNameController, context, "Username can't be empty");
+    supportingWidgets.textFieldCantBeEmpty(userNameController, context, "Username can't be empty");
 
     // Check if email is empty
-    supportingWidgets.textFieldCantBeEmpty(
-        emailController, context, "Email can't be empty");
+    supportingWidgets.textFieldCantBeEmpty(emailController, context, "Email can't be empty");
 
     // Check if password is empty
-    supportingWidgets.textFieldCantBeEmpty(
-        passwordController, context, "Password can't be empty");
+    supportingWidgets.textFieldCantBeEmpty(passwordController, context, "Password can't be empty");
 
     // Check if email is valid
-    supportingWidgets.textFieldEmailValid(
-        emailController, context, "Invalid email formate");
+    supportingWidgets.textFieldEmailValid(emailController, context, "Invalid email formate");
 
     // Check if password meets minimum length requirement
-    supportingWidgets.passwordLength(passwordController, context,
-        "Password must be at least 6 characters long");
+    supportingWidgets.passwordLength(
+        passwordController, context, "Password must be at least 6 characters long");
 
     setState(() {
       isLoading = true;
     });
 
     // Perform user registration if all validations pass
-    final user = await _auth.registerUserWithEmailAndPassword(
-        emailController.text, passwordController.text, context);
+    final user =
+        await _auth.registerUserWithEmailAndPassword(emailController.text, passwordController.text, context);
     if (user != null) {
       setState(() {
         isLoading = false;
@@ -235,7 +232,7 @@ class _RegistrationState extends State<Registration> {
       // sending user info to firestore
       Map<String, dynamic> userInfo = {
         "Id": id,
-        "Type" : "Urban-outfitter",
+        "Type": "Urban-outfitter",
         "UserName": userNameController.text.trim(),
         "Email": emailController.text.trim(),
         "UserImage": "ecommerce/assets/images/user2.png",

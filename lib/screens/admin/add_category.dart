@@ -1,5 +1,6 @@
 //  Main Files
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:random_string/random_string.dart';
-
 
 // Project Files
 import 'package:ecommerce/main.dart';
@@ -190,30 +190,39 @@ class _AddCategoriesState extends State<AddCategories> {
     context.loaderOverlay.hide();
   }
 
-  void _addCategories() {
-    // created random id for category's
+  void _addCategories() async {
+    // Generate a random id for the category
     String categoryId = randomAlphaNumeric(10);
 
-    // to show current date
+    // Get the current date
     String currentDate = formatter.format(now);
 
-    // then it will convert to list of string
-    List<String> selectedTypeOfCategory = selectedCategoryType
-        .map(
-          (item) => item.label,
-        )
-        .toList();
+    // Reference to the storage location
+    final storageRef = FirebaseStorage.instance.ref().child("category_images/$categoryId");
 
+    // Upload the image
+    final UploadTask imageTask = storageRef.child("category-image.jpg").putFile(_selectedCategoryImage!);
+
+    // Wait for the upload to complete and get the download URL
+    final TaskSnapshot snapshot = await imageTask;
+    final String downloadURL = await snapshot.ref.getDownloadURL();
+
+    // Convert the selected category types to a list of strings
+    List<String> selectedTypeOfCategory = selectedCategoryType.map((item) => item.label).toList();
+
+    // Create a map of the category info
     Map<String, dynamic> categoryInfo = {
       "Date-Time": currentDate,
       "Category-Id": categoryId,
       "Category-Type": selectedTypeOfCategory.single,
       "Category-Name": _categoryName.text,
-      "Category-Image": _selectedCategoryImage!.path,
+      "Category-Image": downloadURL,
     };
 
-    db.addCategory(categoryInfo, categoryId);
+    // Store the category info in Firestore
+    await db.addCategory(categoryInfo, categoryId);
 
+    // Clear the form
     _clearForm();
   }
 
