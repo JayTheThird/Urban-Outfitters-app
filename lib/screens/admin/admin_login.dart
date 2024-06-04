@@ -1,14 +1,14 @@
 // main files
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/screens/admin/admin_home.dart';
-import 'package:ecommerce/widgets/utilities/support_widgets.dart';
+import 'package:ecommerce/widgets/supporting_widgets/support_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // project file
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/widgets/utilities/user_textfield.dart';
-import 'package:ecommerce/widgets/utilities/login_signup-button.dart';
+import 'package:ecommerce/widgets/supporting_widgets/user_textfield.dart';
+import 'package:ecommerce/widgets/supporting_widgets/login_signup-button.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class AdminLogin extends StatefulWidget {

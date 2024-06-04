@@ -1,14 +1,14 @@
 // main files
-import 'package:ecommerce/widgets/utilities/image_slider.dart';
+import 'package:ecommerce/widgets/supporting_widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 // project files
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/data/dummy_data.dart';
 import 'package:ecommerce/widgets/category/category_display.dart';
-import 'package:ecommerce/widgets/utilities/search_bar.dart';
-import 'package:ecommerce/widgets/utilities/main_header.dart';
+import 'package:ecommerce/widgets/supporting_widgets/search_bar.dart';
+import 'package:ecommerce/widgets/supporting_widgets/main_header.dart';
 import 'package:ecommerce/widgets/products/product_display.dart';
-import 'package:ecommerce/widgets/utilities/title_tile.dart';
+import 'package:ecommerce/widgets/supporting_widgets/title_tile.dart';
 import 'package:ecommerce/widgets/category/all_category.dart';
 import 'package:ecommerce/screens/users/all_products.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Project files
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/widgets/utilities/image_picker.dart';
+import 'package:ecommerce/widgets/supporting_widgets/image_picker.dart';
 
 // ignore: must_be_immutable
 class AddProductImageAdmin extends StatefulWidget {

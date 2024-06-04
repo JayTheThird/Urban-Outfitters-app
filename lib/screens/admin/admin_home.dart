@@ -1,6 +1,6 @@
 //  Main Files
 import 'package:ecommerce/screens/admin/add_category.dart';
-import 'package:ecommerce/widgets/utilities/title_list_tiles.dart';
+import 'package:ecommerce/widgets/supporting_widgets/title_list_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:transparent_image/transparent_image.dart';

@@ -12,10 +12,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 //  Project files
 import 'package:ecommerce/main.dart';
-import 'package:ecommerce/widgets/utilities/add_image_to_products_admin.dart';
-import 'package:ecommerce/widgets/utilities/buttons.dart';
-import 'package:ecommerce/widgets/utilities/single_multi_dropdown.dart';
-import 'package:ecommerce/widgets/utilities/user_textfield.dart';
+import 'package:ecommerce/widgets/supporting_widgets/add_image_to_products_admin.dart';
+import 'package:ecommerce/widgets/supporting_widgets/buttons.dart';
+import 'package:ecommerce/widgets/supporting_widgets/single_multi_dropdown.dart';
+import 'package:ecommerce/widgets/supporting_widgets/user_textfield.dart';
 import 'package:random_string/random_string.dart';
 
 class AddProducts extends StatefulWidget {

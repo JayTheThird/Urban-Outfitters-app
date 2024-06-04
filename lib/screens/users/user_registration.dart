@@ -8,11 +8,11 @@ import 'package:random_string/random_string.dart';
 // project file
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/screens/users/user_login.dart';
-import 'package:ecommerce/widgets/utilities/user_textfield.dart';
+import 'package:ecommerce/widgets/supporting_widgets/user_textfield.dart';
 import 'package:ecommerce/services/database/database.dart';
 import 'package:ecommerce/services/auth/auth_services.dart';
-import 'package:ecommerce/widgets/utilities/support_widgets.dart';
-import 'package:ecommerce/widgets/utilities/login_signup-button.dart';
+import 'package:ecommerce/widgets/supporting_widgets/support_widgets.dart';
+import 'package:ecommerce/widgets/supporting_widgets/login_signup-button.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});

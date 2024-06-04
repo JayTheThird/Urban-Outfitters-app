@@ -8,7 +8,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // project files
-import 'package:ecommerce/widgets/utilities/support_styling_widget.dart';
+import 'package:ecommerce/widgets/supporting_widgets/support_styling_widget.dart';
 
 // created style object of SupportStylingClass
 SupportStylingClass style = SupportStylingClass();

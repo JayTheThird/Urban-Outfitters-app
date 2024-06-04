@@ -12,10 +12,10 @@ import 'package:random_string/random_string.dart';
 // Project Files
 import 'package:ecommerce/main.dart';
 import 'package:ecommerce/services/database/database.dart';
-import 'package:ecommerce/widgets/utilities/buttons.dart';
-import 'package:ecommerce/widgets/utilities/image_picker.dart';
-import 'package:ecommerce/widgets/utilities/single_multi_dropdown.dart';
-import 'package:ecommerce/widgets/utilities/user_textfield.dart';
+import 'package:ecommerce/widgets/supporting_widgets/buttons.dart';
+import 'package:ecommerce/widgets/supporting_widgets/image_picker.dart';
+import 'package:ecommerce/widgets/supporting_widgets/single_multi_dropdown.dart';
+import 'package:ecommerce/widgets/supporting_widgets/user_textfield.dart';
 
 class AddCategories extends StatefulWidget {
   const AddCategories({super.key});
